@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% import "macros.jinja" as macros with context %}
+{% import "content_macros.jinja" as content_macros with context %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    {# first item is the root post #}
+    {% set post, sorting_key = posts.pop(0) %}
+    <div class="card mb-3 mx-3">
+        <div class="card-header h5">
+            Title: {{ post.title | safe}}
+            {% if can_set_blog_post_active_state(post) %}
+                {% if post.active %}
+                    <span class="badge rounded-pill bg-success float-end">Active</span>
+                {% else %}
+                    <span class="badge rounded-pill bg-danger float-end">Inactive</span>
+                {% endif %}
+            {% endif %}
+        </div>
+        <ul class="list-group list-group-flush fs-6">
+            <li class="list-group-item fs-6">
+                <span class="fs-6">
+                Author: {{ post.user.full_name | safe }}
+                </span>
+            </li>
+            <li class="list-group-item">
+                Created: {{ post.created | format_datetime | safe }}
+            </li>
+            <li class="list-group-item">
+                Updated: {{ post.updated | format_datetime | safe }}
+            </li>
+            <li class="list-group-item">
+                {{ post.content | markdown}}
+            </li>
+        </ul>
+        <div class="card-footer text-end">
+            {% if can_update_blog_post(post) %}
+                <a
+                    class="btn btn-primary"
+                    href="{{url_for('content_bp.blog_post', post_uid=post.post_uid, action='update')}}"
+                >
+                    Update
+                </a>
+            {% endif %}
+            {% if not current_user.is_anonymous %}
+                <button
+                    type="button"
+                    class="btn btn-success post-comment"
+                    data-bs-toggle="modal"
+                    data-bs-target="#comment_modal"
+                    data-post-uid="{{post.post_uid}}"
+                    tabindex="6"
+                >
+                    Comment
+                </button>
+            {% endif %}
+        </div>
+    </div>
+    {# render the rest of the comments #}
+    {% for post, sorting_key in posts %}
+        {% set level = sorting_key.split(" ")|length - 1 %}
+        {{ content_macros.render_comment(post, level) }}
+    {% endfor %}
+</div>
+{{ content_macros.form_create_comment_modal() }}
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/post.css') }}" />
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='js/post_comment.js') }}"></script>
+{% endblock %}

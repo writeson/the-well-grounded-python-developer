@@ -1,0 +1,39 @@
+# configure some default settings
+[default]
+confirmation_link_timeout = 12 # in hours
+password_reset_timeout = 10 # in minutes
+sqlalchemy_database_uri = "sqlite:///myblog.sqlite" 
+sqlalchemy_track_modifications = false 
+
+# configure the development environment settings
+[development]
+debug_tb_enabled = false
+debug_tb_intercept_redirects = false
+debug_tb_profiler_enabled = true
+debug_tb_template_editor_enabled = true
+extensions = ["flask_debugtoolbar:DebugToolbarExtension"]
+flask_debug = true
+
+# development datatabase settings
+sqlalchemy_echo = false
+sqlalchemy_record_queries = true
+
+# set the development logging level
+logging_level = "DEBUG"
+
+# set the blog posts per page
+blog_posts_per_page = 10
+
+# configure the production environment settings
+[production]
+flask_debug = false
+
+# production datatabase settings
+sqlalchemy_echo = false
+sqlalchemy_record_queries = false
+
+# set the production logging level
+logging_level = "INFO"
+
+# set the blog posts per page
+blog_posts_per_page = 10

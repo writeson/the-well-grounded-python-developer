@@ -1,0 +1,48 @@
+div.myblog-post .h1,
+h1 {
+  font-size: 2.2rem;
+}
+
+div.myblog-post .h2,
+h2 {
+  font-size: 1.8rem;
+}
+
+div.myblog-post .h3,
+h3 {
+  font-size: 1.6rem;
+}
+
+div.myblog-post .h4,
+h4 {
+  font-size: 1.4rem;
+}
+
+div.myblog-post .h5,
+h5 {
+  font-size: 1.2rem;
+}
+
+div.myblog-post .h6,
+h6 {
+  font-size: 1rem;
+}
+
+.myblog-post {
+  padding: 0 .5em 0 .5em;
+}
+
+.flask-pagedown-preview {
+  height: 10em;
+  overflow: auto;
+  margin-top: 1em;
+  padding: 0 .5em 0 .5em;
+  border-radius: .25rem;
+  border: solid 1px lightgrey;
+}
+
+@media (min-height: 500px) {
+  .flask-pagedown-preview {
+    height: 20em;
+  }
+}

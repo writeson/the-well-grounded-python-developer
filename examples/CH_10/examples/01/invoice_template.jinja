@@ -1,0 +1,37 @@
+<html lang="en">
+  <head>
+    <title>Invoice</title>
+  </head>
+  <body>
+    <div class="container border border-dark border-2 rounded-2">
+      <div class="container border border-dark mt-3 mb-3">
+        <h3>Invoice</h3>
+        Customer: {{customer.get('customer')}}<br />
+        Street: {{address.get('street')}}<br />
+        Zip Code: {{address.get('zipcode')}}<br />
+        Order Number: {{order.get('order_id')}}<br />
+      </div>
+      <table class="table table-striped table-bordered caption-top">
+        <caption>
+            Order Items
+        </caption>
+        <thead>
+          <tr>
+            <th>Item Number</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{loop.index}}
+            <td>{{item.get('product')}}
+            <td>{{item.get('qty')}}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

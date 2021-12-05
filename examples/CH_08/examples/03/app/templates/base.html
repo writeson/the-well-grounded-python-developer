@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyBlog</title>
+  {% block styles %}
+  <style>
+    :root {
+        --background-url: url({{url_for("static", filename= "images/myblog_banner_50.png")}});
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}"/>
+  {% endblock %}
+</head>
+<body class="d-flex flex-column h-100">
+  <div class="banner card">
+    <div class="card-body">
+      <div class="col-md-4 offset-md-1">
+        <h2 class="card-title fw-bold">MyBlog Home Page</h2>
+        <p class="card-text">Just a blog to call my own</p>
+      </div>
+    </div>
+  </div>
+  <main class="flex-shrink-0">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer mt-auto py-1 bg-light">
+    <div class="container text-center">
+        <span class="text-muted">&copy; Copyright 2021 / MyBlog</span>
+    </div>
+  </footer>
+  {% block scripts %}
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  {% endblock %}
+</body>
+</html>

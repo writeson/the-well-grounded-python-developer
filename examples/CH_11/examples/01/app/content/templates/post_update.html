@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <form name="post_update" method="POST" novalidate>
+            {{form.csrf_token}}
+            <div class="card">
+                <div class="card-header h5">
+                    Update Blog Post Content
+                    {% if post.active %}
+                        <span class="badge rounded-pill bg-success float-end">Active</span>
+                    {% else %}
+                        <span class="badge rounded-pill bg-danger float-end">Inactive</span>
+                    {% endif %}
+                </div>
+                <div class="card-body" style="height: 75%">
+                    <div class="card-title">
+                        <div class="form-floating mb-3">
+                            {{ form.title(class_="form-control") }}
+                            {{ form.title.label(class_="form-label") }}
+                        </div>
+                    </div>
+                    <div class="card-text">
+                        {{ form.content.label(class_="form-label") }}
+                        {{ form.content(class_="form-control", rows=20) }}
+                    </div>
+                </div>
+                {% if can_update_blog_post(post) %}
+                {{form.active_state}}
+                <div class="card-footer d-md-flex justify-content-md-end">
+                    {{form.post_update(class_="btn btn-primary me-2")}}
+                    {% if can_set_blog_post_active_state(post) %}
+                        {% if post.active == True %} 
+                            {{form.deactivate(class_="btn btn-danger me-2")}}
+                        {% else %} 
+                            {{form.activate(class_="btn btn-success me-2")}}
+                        {% endif %} 
+                    {% endif %}
+                    {{form.cancel(class_="btn btn-warning")}}
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/post.css') }}" />
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='js/Markdown.Converter.min.js') }}"></script>
+    <script src="{{ url_for('.static', filename='js/Markdown.Sanitizer.min.js') }}"></script>
+    <script src="{{ url_for('.static', filename='js/post.js') }}"></script>
+{% endblock %}

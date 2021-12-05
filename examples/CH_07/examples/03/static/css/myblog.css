@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header h1 {
+    margin: 0px;
+    background-color: darkcyan;
+    height: 75px;
+    text-align: center;
+    line-height: 75px;
+}
+
+#content {
+    flex: 1 0 auto;
+    margin: 20px;
+}
+
+#content h2 {
+    border: 3px solid lightgray;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    background-color: bisque;
+}
+
+#footer {
+    flex-shrink: 0;
+}
+
+#footer h4 {
+    margin: 0px;
+    background-color: lightgrey;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Your Second Web Server</title>
+    {% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/myblog.css') }}">
+    {% endblock %}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="header">
+        <h1>MyBlog Home Page</h1>
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+        {% block footer %}
+        <h4>Copyright &copy; 2020 by MyBlog</h4>
+        {% endblock %}
+    </div>
+</body>
+{% block scripts %}{% endblock %}
+
+</html>

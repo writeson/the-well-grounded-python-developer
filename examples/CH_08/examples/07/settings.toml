@@ -1,0 +1,19 @@
+# configure some default settings
+[default]
+
+# configure the development environment settings
+[development]
+flask_debug = true
+extensions = ["flask_debugtoolbar:DebugToolbarExtension"]
+debug_tb_enabled = true
+debug_tb_intercept_redirects = false
+
+# set the development logging level
+logging_level = "DEBUG"
+
+# configure the production environment settings
+[production]
+flask_debug = false
+
+# set the production logging level
+logging_level = "INFO"

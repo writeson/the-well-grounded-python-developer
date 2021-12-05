@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Current time: {{ data["now"] }}</h2>
+<p>Page visits: {{ data["page_visit"].counts() }}</p>
+<p>List of available banner colors:</p>
+<ul>
+    {% for banner_color in data["banner_colors"] %}
+    <li>{{ banner_color }}</li>
+    {% endfor %}
+</ul>
+<div id="color-change">
+    <button class="change-banner-color">
+        Change Banner Color
+    </button>
+</div>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    const banner_colors = {{ data["banner_colors"] | tojson | safe }};
+</script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

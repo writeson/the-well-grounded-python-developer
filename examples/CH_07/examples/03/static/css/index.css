@@ -1,0 +1,25 @@
+#color-change button {
+	background-color: lightgrey;
+	border-radius: 5px;
+	border: 1px solid grey;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-family: Arial;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 13px 69px;
+	text-decoration: none;
+	text-shadow: 0px 0px 0px lightskyblue;
+}
+
+#color-change button:hover {
+	background-color: darkgrey;
+}
+
+#color-change button:active {
+	position: relative;
+	top: 1px;
+}
+
+        

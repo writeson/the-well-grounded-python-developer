@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <div class="card text-dark bg-light border-secondary mt-5">
+                <div class="card-header text-center">
+                    <h1 class="fw-bold">Welcome To MyBlog</h1>
+                </div>
+                <div class="card-body">
+                    <p class="card-text fs-3">
+                        The MyBlog web application is developed as the example
+                        application presented in "The Well-Grounded Python Developer"
+                        book.
+                    </p>
+                    <p class="card-text fs-3">
+                        The MyBlog application evolves over the course of chapters in the book
+                        as new features and functionality are added. 
+                    </p>
+                    <p class="card-text fs-3">
+                        Most of the features added over time are intended to 
+                        present information, tools and techniques to help
+                        developers increase their ability to handle larger
+                        projects and think in big picture ways. 
+                    </p>
+                    <p class="card-text fs-3">
+                        The ultimate goal of the book is to help you translate 
+                        that picture into a solid, maintainable application 
+                        implementation.
+                    </p>
+                    <p class="card-text fs-3">
+                        From this page you can navigate to the 
+                        <a href="{{ url_for('content_bp.blog_posts')}}">MyBlog content</a>
+                        which is the primary functionality the application provides.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

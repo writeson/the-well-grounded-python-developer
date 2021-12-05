@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="card mb-3 mx-3">
+        <div class="card-header h5">
+            Title: {{ post.title | safe}}
+            {% if can_set_blog_post_active_state(post) %}
+                {% if post.active %}
+                    <span class="badge rounded-pill bg-success float-end">Active</span>
+                {% else %}
+                    <span class="badge rounded-pill bg-danger float-end">Inactive</span>
+                {% endif %}
+            {% endif %}
+        </div>
+        <ul class="list-group list-group-flush fs-6">
+            <li class="list-group-item fs-6">
+                <span class="fs-6">
+                Author: {{ post.user.full_name | safe }}
+                </span>
+            </li>
+            <li class="list-group-item">
+                Created: {{ post.created | format_datetime | safe }}
+            </li>
+            <li class="list-group-item">
+                Updated: {{ post.updated | format_datetime | safe }}
+            </li>
+            <li class="list-group-item">
+                {{ post.content | markdown}}
+            </li>
+        </ul>
+        {% if can_update_blog_post(post) %}
+        <div class="card-footer text-end">
+            <a
+                class="btn btn-primary"
+                href="{{url_for('content_bp.blog_post', post_uid=post.post_uid, action='update')}}"
+            >
+                Update
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/post.css') }}" />
+{% endblock %}
