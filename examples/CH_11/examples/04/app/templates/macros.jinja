@@ -1,0 +1,204 @@
+{# 
+    handle the flash messages as bootstrap toasts
+#}
+{% macro flask_flash_messages() %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div aria-live="polite" 
+           aria-atomic="true"
+           class="position-relative">
+        <div class="toast-container position-absolute top-0 end-0 p-3"
+             style="z-index: 2000; opacity: 1;">
+          {% for category, message in messages %}
+            {% set category = "white" if category == "message" else category %}
+            {% set text_color = "text-dark" if category in [
+              "warning",
+              "info",
+              "light",
+              "white",
+              ] else "text-white"
+            %}
+            <div class="toast bg-{{category}}" 
+                role="alert" 
+                aria-live="assertive" 
+                aria-atomic="true">
+              <div class="toast-header bg-{{category}} {{text_color}}">
+                {% set toast_title = category if category in [
+                  "success", "danger", "warning", "info"
+                ] else "message" %}
+                <strong class="me-auto">MyBlog: {{toast_title.title()}}</strong>
+                <button type="button" 
+                        class="btn-close" 
+                        data-bs-dismiss="toast" 
+                        aria-label="Close"></button>
+              </div>
+              <div class="toast-body {{text_color}}">
+                {{message}}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endwith %}
+{% endmacro %}
+
+{#
+    This macro builds the nav items for the application navbar
+#}
+{% macro build_nav_item(nav_item) %}
+    {# configure the navigation items to build in the navbar #}
+    {% set nav_items = [
+        {"name": "Home", "link": "intro_bp.home", "icon": "bi-house"},
+        {"name": "Content", "link": "content_bp.blog_posts", "icon": "bi-pencil-square", "dropdown": [
+            {"name": "Posts", "link": "content_bp.blog_posts"},
+            {"name": "Create", "link": "content_bp.blog_posts", "icon": "bi-pencil-square", "query_string": "action=create"},
+        ]},
+        {"name": "About","link": "intro_bp.about", "icon": "bi-info-square"},
+    ]
+    %}
+    {# iterate through the nav items variable above #}
+    {% for nav_item in nav_items %}
+        {% if "dropdown" in nav_item %}
+            <li class="nav-item dropdown">
+                {% set active_link = "active"  if request.endpoint == nav_item["link"] else "" %}
+                <a class="nav-link dropdown-toggle ml-2 {{ active_link }}" id="navbarDropdown" role="button" aria-current="page" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                    {% if "icon" in nav_item %}
+                    <i class="bi {{ nav_item['icon'] }}"></i>
+                    {% endif %}
+                    {{nav_item["name"]}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledy="navbarDropdown">
+                {% for dropdown_nav_item in nav_item["dropdown"] %}
+                    <li>
+                        {% if "query_string" in dropdown_nav_item %}
+                            {% if not current_user.is_anonymous %}
+                                {% set action = dropdown_nav_item.get("query_string", "=").split("=")[1] %}
+                                <a class="dropdown-item" href="{{url_for(dropdown_nav_item['link'], action=action)}}">
+                                    {% if "icon" in dropdown_nav_item %}
+                                    <i class="bi {{ nav_item['icon'] }}"></i>
+                                    {% endif %}
+                                    {{dropdown_nav_item["name"]}}
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a class="dropdown-item" href="{{url_for(dropdown_nav_item['link'])}}">
+                                {% if "icon" in dropdown_nav_item %}
+                                <i class="bi {{ nav_item['icon'] }}"></i>
+                                {% endif %}
+                                {{dropdown_nav_item["name"]}}
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+        {% else %}
+            <li class="nav-item">
+            <a 
+                class="nav-link ml-2 {{ 'active' if request.endpoint == nav_item['link'] else '' }}" 
+                aria-current="page" 
+                href="{{url_for(nav_item['link'])}}"
+            >
+                {% if "icon" in nav_item %}
+                <i class="bi {{ nav_item['icon'] }}"></i>
+                {% endif %}
+                {{nav_item["name"]}}
+            </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{#
+    This macro builds the login/logout items for the application navbar
+#}
+{% macro build_login_logout_items(current_user) %}
+    {% if not current_user.is_authenticated %}
+        {% if request.endpoint == "auth_bp.login" %}
+            <a class="nav-link ml-2 active separator" aria-current="page" href="{{url_for('auth_bp.login')}}">
+        {% else %}
+            <a class="nav-link ml-2 separator" href="{{url_for('auth_bp.login')}}">
+        {% endif %}
+            <i class="bi bi-door-open"></i>
+            Login
+        </a>
+    {% else %}
+        <a class="nav-link ml-2 separator" href="{{url_for('auth_bp.profile', user_uid=current_user.user_uid)}}">
+          Welcome {{ current_user|attr("first_name")}}
+        </a>
+        <a class="nav-link ml-2 separator" href="{{url_for('auth_bp.logout')}}">
+            <i class="bi bi-door-closed"></i>
+            Logout
+        </a>
+    {% endif %}
+{% endmacro %}
+
+{# 
+    This macro outputs any form errors and should be
+    placed under a form control in the html
+#}
+{% macro validation_errors(errors) %}
+    {% if errors %}
+        {% for error in errors %}
+            <div class="text-danger small">{{error}}</div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{#
+    This macro outputs the HTML code for a Bootstrap modal
+    confirmation dialog with a custom message (question).
+#}
+{% macro form_confirmation_modal(title, message, btn_1, btn_2) %}
+    <div class="modal fade" id="confirmation_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">{{ title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ message }}
+                </div>
+                <div class="modal-footer">
+                <button type="button" id="{{ btn_1 | lower }}" class="btn btn-primary">{{ btn_1 }}</button>
+                <button type="button" id="{{ btn_2 | lower }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ btn_2 }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{#
+    This macro creates the pagination buttons for posts
+#}
+{% macro render_pagination(pagination, endpoint) %}
+    <div aria-label="Blog posts page navigation">
+        <ul class="pagination mx-3">
+            {% if pagination.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for(endpoint, page=pagination.prev_num) }}">Previous</a>
+                </li>
+            {% endif %}
+            {% for page in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+                {% if page %}
+                    {% if page == pagination.page %}
+                        <li class="page-item active">
+                            <a class="page-link" href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for(endpoint, page=pagination.next_num) }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endmacro %}

@@ -1,0 +1,110 @@
+{% macro render_comment(post, level) %}
+    <div style="margin-left: {{ level * 3 }}em;">
+        <div class="card mb-3 mx-3" style="border-radius: 0;">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-2">
+                        Author:&nbsp;{{ post.user.full_name }}
+                    </div>
+                    <div class="col-10">
+                        Created:&nbsp;{{ post.created | format_datetime | safe  }}
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div>{{ post.content }}</div>
+            </div>
+            {% if level < 2 %}
+                {% if not current_user.is_anonymous %}
+                <hr style="margin: 0; opacity: .125;">
+                <div class="d-grid d-md-flex justify-content-md-end">
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-sm post-comment"
+                        style="border-radius: 0; width: 100px;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#comment_modal"
+                        data-post-uid="{{post.post_uid}}"
+                    >
+                        Comment
+                    </button>
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{#
+    This macro outputs the HTML code for a Bootstrap modal
+    dialog allowing the user to create a comment
+#}
+{% macro form_create_comment_modal_1(post) %}
+    <form 
+        name="comment"
+        action="{{url_for('content_bp.blog_post_create_comment')}}"
+        method="POST"
+        novalidate
+    >
+        <div
+            class="modal fade"
+            id="comment_modal_post_uid_{{ post.post_uid }}"
+            aria-labelledby="commentModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Comment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{form.csrf_token}}
+                        {{form.post_uid(value=post.post_uid)}}
+                        {{form.comment(class_="form-control", style="min-width: 100%", rows="3")}}
+                        {{macros.validation_errors(form.comment.errors)}}
+                    </div>
+                    <div class="modal-footer">
+                        {{form.create(class_="btn btn-primary")}}
+                        <button class="btn btn-warning cancel_comment" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endmacro %}
+
+{% macro form_create_comment_modal() %}
+    <form 
+        name="comment"
+        action="{{url_for('content_bp.blog_post_create_comment')}}"
+        method="POST"
+        novalidate
+    >
+        <div
+            class="modal fade"
+            id="comment_modal"
+            aria-labelledby="commentModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Comment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{form.csrf_token}}
+                        {{form.parent_post_uid}}
+                        {{form.comment(class_="form-control", style="min-width: 100%", rows="3")}}
+                        {{macros.validation_errors(form.comment.errors)}}
+                    </div>
+                    <div class="modal-footer">
+                        {{form.create_comment(class_="btn btn-primary")}}
+                        <button class="btn btn-warning cancel_comment" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endmacro %}

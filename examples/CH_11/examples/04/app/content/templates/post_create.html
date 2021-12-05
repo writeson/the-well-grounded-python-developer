@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <form method="POST">
+            {{form.csrf_token}}
+            <div class="card">
+                <div class="card-header h4">
+                    Create Blog Post Content
+                </div>
+                <div class="card-body" style="height: 75%">
+                    <div class="card-title">
+                        <div class="form-floating mb-3">
+                            {{ form.title(class_="form-control") }}
+                            {{ form.title.label(class_="form-label") }}
+                        </div>
+                    </div>
+                    <div class="card-text">
+                        {{ form.content.label(class_="form-label") }}
+                        {{ form.content(rows=20, class_="form-control") }}
+                    </div>
+                </div>
+                <div class="card-footer d-md-flex justify-content-md-end">
+                    {{ form.post_create(class_="btn btn-primary me-2") }}
+                    {{ form.cancel(class_="btn btn-warning") }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/post.css') }}" />
+{% endblock %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='js/Markdown.Converter.min.js') }}"></script>
+    <script src="{{ url_for('.static', filename='js/Markdown.Sanitizer.min.js') }}"></script>
+    <script src="{{ url_for('.static', filename='js/post.js') }}"></script>
+{% endblock %}

@@ -1,4 +1,5 @@
 import os
+from flask.templating import render_template
 import yaml
 from pathlib import Path
 from flask import Flask, send_from_directory, session
@@ -71,6 +72,10 @@ def create_app():
         from .models import Role
         Role.initialize_role_table()
 
+        # register error handlers
+        app.register_error_handler(404, error_page)
+        app.register_error_handler(500, error_page)
+
         # inject the role permissions class into all template contexts
         @app.context_processor
         def inject_permissions():
@@ -96,3 +101,7 @@ def _configure_logging(app, dynaconf):
         logging_config["handlers"]["console"]["level"] = logging_level
         logging_config["loggers"][""]["level"] = logging_level
         logging.config.dictConfig(logging_config)
+
+
+def error_page(e):
+    return render_template("error.html", e=e), 404
