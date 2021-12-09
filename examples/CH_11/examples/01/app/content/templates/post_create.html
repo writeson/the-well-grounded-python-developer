@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container-fluid mt-3">
-        <form method="POST">
+        <form method="POST" novalidate>
             {{form.csrf_token}}
             <div class="card">
                 <div class="card-header h4">
@@ -14,11 +14,13 @@
                             {{ form.title(class_="form-control") }}
                             {{ form.title.label(class_="form-label") }}
                         </div>
+                        {{macros.validation_errors(form.title.errors)}}
                     </div>
                     <div class="card-text">
                         {{ form.content.label(class_="form-label") }}
-                        {{ form.content(rows=20, class_="form-control") }}
+                        {{ form.content(rows=10, class_="form-control") }}
                     </div>
+                    {{macros.validation_errors(form.content.errors)}}
                 </div>
                 <div class="card-footer d-md-flex justify-content-md-end">
                     {{ form.post_create(class_="btn btn-primary me-2") }}
