@@ -1,3 +1,4 @@
+import re
 from flask import (
     render_template,
     redirect,
@@ -79,8 +80,8 @@ def blog_post_create():
         with db_session_manager() as db_session:
             post = Post(
                 user_uid=current_user.user_uid,
-                title=form.title.data.strip(),
-                content=form.content.data.strip(),
+                title=re.sub('<[^<]+?>', '', form.title.data.strip()),
+                content=re.sub('<[^<]+?>', '', form.content.data.strip()),
             )
             db_session.add(post)
             db_session.commit()
@@ -157,8 +158,8 @@ def blog_post_update(post_uid=None):
         if form.cancel.data:
             return redirect(url_for("intro_bp.home"))
         if form.validate_on_submit():
-            post.title = form.title.data.strip()
-            post.content = form.content.data.strip()
+            post.title = re.sub('<[^<]+?>', '', form.title.data.strip())
+            post.content = re.sub('<[^<]+?>', '', form.content.data.strip())
             if form.activate.data:
                 post.active = True
             elif form.deactivate.data:
