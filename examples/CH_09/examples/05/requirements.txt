@@ -23,7 +23,7 @@ gunicorn==20.1.0
 idna==3.2
 itsdangerous==2.0.1
 Jinja2==3.0.1
-lxml==4.6.4
+lxml=4.6.5
 Mako==1.1.4
 MarkupSafe==2.0.1
 misaka==2.1.1

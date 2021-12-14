@@ -1,8 +1,22 @@
+import re
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField
 from flask_pagedown.fields import PageDownField
 from wtforms.fields.simple import HiddenField
 from wtforms.validators import DataRequired, Length
+
+
+def remove_html_and_script_tags(input_string: str) -> str:
+    """Removes the html and script tags from the input
+    string and returns the results
+
+    Args:
+        input_string (str): string provided by user in form
+
+    Returns:
+        str: the input string cleaned of html and script tags
+    """
+    return re.sub('<[^<]+?>', '', input_string) if input_string is not None else input_string
 
 
 class PostForm(FlaskForm):
@@ -12,11 +26,13 @@ class PostForm(FlaskForm):
             min=4,
             max=128
         )],
+        filters=(remove_html_and_script_tags,),
         render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
     )
     content = PageDownField(
         "Content",
         validators=[DataRequired()],
+        filters=(remove_html_and_script_tags,),
         render_kw={"placeholder": " ", "tabindex": 2}
     )
     post_create = SubmitField(
@@ -35,11 +51,13 @@ class PostUpdateForm(FlaskForm):
             min=4,
             max=128
         )],
+        filters=(remove_html_and_script_tags,),
         render_kw={"placeholder": " ", "tabindex": 1}
     )
     content = PageDownField(
         "Content",
         validators=[DataRequired()],
+        filters=(remove_html_and_script_tags,),
         render_kw={"placeholder": " ", "tabindex": 2, "autofocus": True}
     )
     active_state = HiddenField("active_state")
@@ -66,6 +84,7 @@ class PostCommentForm(FlaskForm):
     comment = TextAreaField(
         "Comment",
         validators=[DataRequired()],
+        filters=(remove_html_and_script_tags,),
         render_kw={"placeholder": " "}
     )
     create_comment = SubmitField(
