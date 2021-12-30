@@ -21,7 +21,7 @@ logger = getLogger(__name__)
 @content_bp.post("/blog_posts")
 def blog_posts():
     """This function dispatches control to the correct handler
-    based on the URL and the query string
+    based on the URL and the )query string
 
     Returns:
         Response: The Flask Response object with the rendered page
