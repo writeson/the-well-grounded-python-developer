@@ -48,7 +48,7 @@ def get_uuid():
 
 
 class User(UserMixin, db.Model):
-    """The beginings of a User class to structure what
+    """The User class to structure what
     a user looks like for the MyBlog application. This
     capitalizes on the flask_login UserMixin class for
     some default methods. The UserMixin class will be
@@ -252,9 +252,9 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"""
-        post_uid: {self.role_uid}
+        post_uid: {self.post_uid}
         title: {self.title}
-        post: {self.post}
+
         active: {'True' if self.active else 'False'}
         created: {self.created}
         updated: {self.updated}

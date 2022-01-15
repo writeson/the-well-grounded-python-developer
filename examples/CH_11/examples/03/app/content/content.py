@@ -173,6 +173,7 @@ def blog_post_update(post_uid=None):
                 post.active = False
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' updated")
+            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
         return render_template("post_update.html", form=form, post=post)
 
 

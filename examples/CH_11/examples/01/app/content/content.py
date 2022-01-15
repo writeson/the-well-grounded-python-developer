@@ -21,7 +21,7 @@ logger = getLogger(__name__)
 @content_bp.post("/blog_posts")
 def blog_posts():
     """This function dispatches control to the correct handler
-    based on the URL and the query string
+    based on the URL and the )query string
 
     Returns:
         Response: The Flask Response object with the rendered page
@@ -165,6 +165,7 @@ def blog_post_update(post_uid=None):
                 post.active = False
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' updated")
+            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
         return render_template("post_update.html", form=form, post=post)
 
 

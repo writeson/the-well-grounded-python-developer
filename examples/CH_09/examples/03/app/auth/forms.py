@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
             max=128,
             message="Email must be between 4 and 128 characters long"
         ), Email()],
-        render_kw={"placeholder": " ", "tabindex": 1}
+        render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
     )
     password = PasswordField(
         "Password",
@@ -37,7 +37,7 @@ class RegisterNewUserForm(FlaskForm):
     first_name = StringField(
         "First Name",
         validators=[DataRequired()],
-        render_kw={"placeholder": " ", "tabindex": 1}
+        render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
     )
     last_name = StringField(
         "Last Name",

@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
             max=128,
             message="Email must be between 4 and 128 characters long"
         ), Email()],
-        render_kw={"placeholder": " ", "tabindex": 1}
+        render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
     )
     password = PasswordField(
         "Password",
@@ -37,7 +37,7 @@ class RegisterNewUserForm(FlaskForm):
     first_name = StringField(
         "First Name",
         validators=[DataRequired()],
-        render_kw={"placeholder": " ", "tabindex": 1}
+        render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
     )
     last_name = StringField(
         "Last Name",
@@ -93,14 +93,15 @@ class ResendConfirmationForm(FlaskForm):
         ), Email()],
         render_kw={"placeholder": " ", "tabindex": 1}
     )
-    cancel = SubmitField("Cancel", render_kw={"tabindex": 3})
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 3, "autofocus": True}
+    )
 
 
 class UserProfileForm(FlaskForm):
     first_name = StringField(
         "First Name",
         validators=[DataRequired()],
-        render_kw={"placeholder": " ", "tabindex": 1, "readonly": True}
+        render_kw={"placeholder": " ", "tabindex": 1, "readonly": True, "autofocus": True}
     )
     last_name = StringField(
         "Last Name",
@@ -149,7 +150,7 @@ class RequestResetPasswordForm(FlaskForm):
         ), Email()],
         render_kw={"placeholder": " ", "tabindex": 1}
     )
-    cancel = SubmitField("Cancel", render_kw={"tabindex": 3})
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 3, "autofocus": True})
 
 
 class ResetPasswordForm(FlaskForm):
@@ -162,7 +163,7 @@ class ResetPasswordForm(FlaskForm):
         ),
             EqualTo("confirm_password", message="Passwords must match")
         ],
-        render_kw={"placeholder": " ", "tabindex": 1}
+        render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
     )
     confirm_password = PasswordField(
         "Confirm Password",

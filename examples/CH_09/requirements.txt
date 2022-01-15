@@ -24,7 +24,7 @@ gunicorn==20.1.0
 idna==3.3
 itsdangerous==2.0.1
 Jinja2==3.0.3
-lxml==4.6.4
+lxml==4.6.5
 Mako==1.1.6
 MarkupSafe==2.0.1
 premailer==3.10.0
@@ -36,6 +36,7 @@ PyYAML==6.0
 requests==2.26.0
 six==1.16.0
 SQLAlchemy==1.4.27
+unsync==1.4.0
 urllib3==1.26.7
 waitress==2.0.0
 Werkzeug==2.0.2

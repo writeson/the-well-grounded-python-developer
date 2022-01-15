@@ -25,6 +25,9 @@ from .forms import (
     PostCommentForm
 )
 from sqlalchemy.orm import aliased
+from sqlalchemy.sql.expression import func
+from sqlalchemy.types import String
+
 
 logger = getLogger(__name__)
 
@@ -127,8 +130,8 @@ def blog_post_display(post_uid):
     on the post_uid to the user that are clickable for
     the full post page
 
-    Returns:
         text: the rendered HTML for the page
+    Returns:
     """
     logger.debug("rendering blog post page")
     form = PostCommentForm()
@@ -173,6 +176,7 @@ def blog_post_update(post_uid=None):
                 post.active = False
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' updated")
+            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
         return render_template("post_update.html", form=form, post=post)
 
 
@@ -273,14 +277,18 @@ def _build_posts_hierarchy(db_session, post_uid):
         db_session
         .query(
             children,
-            (hierarchy.c.sorting_key + " " + children.sort_key).label("sorting_key")
+            (
+                func.cast(hierarchy.c.sorting_key, String) +
+                " " +
+                func.cast(children.sort_key, String)
+            ).label("sorting_key")
         )
         .filter(children.parent_uid == hierarchy.c.post_uid)
     )
     # query the hierarchy for the post and it's comments
     return (
         db_session
-        .query(Post, hierarchy.c.sorting_key)
+        .query(Post, func.cast(hierarchy.c.sorting_key, String))
         .select_entity_from(hierarchy)
         .order_by(hierarchy.c.sorting_key)
         .all()
