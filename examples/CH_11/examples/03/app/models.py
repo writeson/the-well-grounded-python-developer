@@ -270,7 +270,7 @@ class Post(db.Model):
     __tablename__ = "post"
     post_uid = db.Column(db.String, primary_key=True, default=get_uuid)
     parent_uid = db.Column(db.String, db.ForeignKey("post.post_uid"), default=None)
-    sort_key = db.Column(db.String, nullable=False, unique=True, default=get_next_sort_key)
+    sort_key = db.Column(db.Integer, nullable=False, unique=True, default=get_next_sort_key)
     user_uid = db.Column(db.String, db.ForeignKey("user.user_uid"), nullable=False, index=True)
     title = db.Column(db.String)
     content = db.Column(db.String)
@@ -282,12 +282,12 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"""
-        post_uid: {self.role_uid}
+        post_uid: {self.post_uid}
         parent_uid: {self.parent_uid}
         sort_key: {self.sort_key}
         title: {self.title}
         content: {self.content}
-        post: {self.post}
+
         active: {'True' if self.active else 'False'}
         created: {self.created}
         updated: {self.updated}

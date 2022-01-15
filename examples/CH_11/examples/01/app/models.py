@@ -252,9 +252,9 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"""
-        post_uid: {self.role_uid}
+        post_uid: {self.post_uid}
         title: {self.title}
-        post: {self.post}
+
         active: {'True' if self.active else 'False'}
         created: {self.created}
         updated: {self.updated}
