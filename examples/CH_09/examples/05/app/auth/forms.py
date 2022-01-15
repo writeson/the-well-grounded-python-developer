@@ -93,7 +93,8 @@ class ResendConfirmationForm(FlaskForm):
         ), Email()],
         render_kw={"placeholder": " ", "tabindex": 1}
     )
-    cancel = SubmitField("Cancel", render_kw={"tabindex": 3}, "autofocus": True)
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 3, "autofocus": True}
+    )
 
 
 class UserProfileForm(FlaskForm):
@@ -149,7 +150,7 @@ class RequestResetPasswordForm(FlaskForm):
         ), Email()],
         render_kw={"placeholder": " ", "tabindex": 1}
     )
-    cancel = SubmitField("Cancel", render_kw={"tabindex": 3}, "autofocus": True)
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 3, "autofocus": True})
 
 
 class ResetPasswordForm(FlaskForm):
