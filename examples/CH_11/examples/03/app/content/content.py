@@ -30,7 +30,6 @@ logger = getLogger(__name__)
 
 
 @content_bp.get("/blog_posts")
-@content_bp.post("/blog_posts")
 def blog_posts():
     """This function dispatches control to the correct handler
     based on the URL and the query string
@@ -106,7 +105,6 @@ def blog_post_create():
 
 
 @content_bp.get("/blog_posts/<post_uid>")
-@content_bp.post("/blog_posts/<post_uid>")
 def blog_post(post_uid=None):
     """This function dispatches control to the correct handler
     based on the URL and the query string

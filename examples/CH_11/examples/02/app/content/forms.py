@@ -23,9 +23,7 @@ class PostForm(FlaskForm):
         "Create Blog Post",
         render_kw={"tabindex": 3}
     )
-    cancel = SubmitField("Cancel",
-                         render_kw={"tabindex": 4}
-                         )
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 4})
 
 
 class PostUpdateForm(FlaskForm):

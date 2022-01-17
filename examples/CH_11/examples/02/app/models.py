@@ -277,7 +277,6 @@ class Post(db.Model):
         sort_key: {self.sort_key}
         title: {self.title}
         content: {self.content}
-
         active: {'True' if self.active else 'False'}
         created: {self.created}
         updated: {self.updated}

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container-fluid mt-3">
-        <form name="post_update" method="POST" novalidate>
+        <form name="post_update" method="PUT" novalidate>
             {{form.csrf_token}}
             <div class="card">
                 <div class="card-header h5">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-text">
                         {{ form.content.label(class_="form-label") }}
-                        {{ form.content(class_="form-control", rows=20) }}
+                        {{ form.content(class_="form-control", rows=10) }}
                     </div>
                 </div>
                 {% if can_update_blog_post(post) %}
@@ -30,11 +30,11 @@
                 <div class="card-footer d-md-flex justify-content-md-end">
                     {{form.post_update(class_="btn btn-primary me-2")}}
                     {% if can_set_blog_post_active_state(post) %}
-                        {% if post.active == True %} 
+                        {% if post.active == True %}
                             {{form.deactivate(class_="btn btn-danger me-2")}}
-                        {% else %} 
+                        {% else %}
                             {{form.activate(class_="btn btn-success me-2")}}
-                        {% endif %} 
+                        {% endif %}
                     {% endif %}
                     {{form.cancel(class_="btn btn-warning")}}
                 </div>

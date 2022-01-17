@@ -254,7 +254,6 @@ class Post(db.Model):
         return f"""
         post_uid: {self.post_uid}
         title: {self.title}
-
         active: {'True' if self.active else 'False'}
         created: {self.created}
         updated: {self.updated}
