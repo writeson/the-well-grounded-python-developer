@@ -10,7 +10,12 @@ from flask import (
 )
 from logging import getLogger
 from . import content_bp
-from ..models import db_session_manager, Post, db, Role
+from ..models import (
+    db_session_manager,
+    Post,
+    db,
+    Role,
+)
 from flask_login import current_user
 from flask_login import login_required
 from .forms import (
@@ -49,8 +54,11 @@ def blog_posts_display():
     search = request.args.get("search")
     with db_session_manager() as db_session:
         page = request.args.get("page", type=int)
-        posts = db_session.query(Post).order_by(Post.updated.desc())
-
+        posts = (
+            db_session
+            .query(Post)
+            .order_by(Post.updated.desc())
+        )
         # can the current user view only active posts:
         if current_user.is_anonymous or current_user.can_view_posts():
             posts = posts.filter(Post.active == True)
@@ -89,7 +97,10 @@ def blog_post_create():
             db_session.add(post)
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' created")
-            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid), code=HTTPStatus.CREATED)
+            return redirect(
+                url_for("content_bp.blog_post", post_uid=post.post_uid),
+                code=HTTPStatus.CREATED
+            )
     return render_template("post_create.html", form=form)
 
 
@@ -168,7 +179,10 @@ def blog_post_update(post_uid=None):
                 post.active = False
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' updated")
-            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid), code=HTTPStatus.ACCEPTED)
+            return redirect(
+                url_for("content_bp.blog_post", post_uid=post.post_uid),
+                code=HTTPStatus.ACCEPTED
+            )
         return render_template("post_update.html", form=form, post=post)
 
 

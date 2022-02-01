@@ -105,7 +105,7 @@ def register_new_user():
 @auth_bp.get("/logout")
 def logout():
     """Log the current user out of the system
-f
+
     Returns:
         redirect: Redirects to the home page
     """

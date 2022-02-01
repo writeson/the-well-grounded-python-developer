@@ -1,4 +1,4 @@
-from flask import render_template, abort
+from flask import render_template
 from logging import getLogger
 from . import intro_bp
 from flask_login import login_required

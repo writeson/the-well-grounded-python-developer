@@ -247,7 +247,7 @@ class Role(db.Model):
         """
 
 
-def get_next_sort_key():
+def get_next_sort_key() -> int:
     """Generates an incrementing sort_key value from the database
 
     Raises:
@@ -287,7 +287,6 @@ class Post(db.Model):
         sort_key: {self.sort_key}
         title: {self.title}
         content: {self.content}
-
         active: {'True' if self.active else 'False'}
         created: {self.created}
         updated: {self.updated}
