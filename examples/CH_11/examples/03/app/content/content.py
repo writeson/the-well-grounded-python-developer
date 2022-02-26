@@ -209,7 +209,7 @@ def blog_post_create_comment():
             return redirect(url_for("content_bp.blog_post", post_uid=root_post.post_uid))
     else:
         flash("No comment to create")
-    return redirect(url_for("intro_bp.home"))
+    return redirect(request.referrer)
 
 
 @content_bp.context_processor
@@ -327,17 +327,17 @@ def notify_root_post_followers(db_session, root_post):
         db_session : The database session to use
         root_post : The root post that had an update
     """
+    post_url = url_for(
+        "content_bp.blog_post",
+        post_uid=root_post.post_uid,
+        _external=True
+    )
     for user_following in root_post.users_following:
-        post_url = url_for(
-            "content_bp.blog_post",
-            post_uid=root_post.post_uid,
-            _external=True
-        )
         to = user_following.email
         subject = "A post you're following has been updated"
         contents = (
             f"""Hi {user_following.first_name},
-            A blog post you're following has had a comment update added to it. You can view
+            A blog post you're following has had a comment added to it. You can view
             that post here: {post_url}
             Thank you!
             """

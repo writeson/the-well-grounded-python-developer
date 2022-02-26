@@ -137,42 +137,7 @@ def blog_post_display(post_uid):
     logger.debug("rendering blog post page")
     form = PostCommentForm()
     with db_session_manager() as db_session:
-        # build the list of filters here to use in the CTE
-        filters = [
-            Post.post_uid == post_uid,
-            Post.parent_uid is None
-        ]
-        if current_user.is_anonymous or current_user.can_view_posts():
-            filters.append(Post.active == True)
-
-        # build the recursive CTE query
-        hierarchy = (
-            db_session
-            .query(Post, Post.sort_key.label("sorting_key"))
-            .filter(*filters)
-            .cte(name='hierarchy', recursive=True)
-        )
-        children = aliased(Post, name="c")
-        hierarchy = hierarchy.union_all(
-            db_session
-            .query(
-                children,
-                (
-                    func.cast(hierarchy.c.sorting_key, String) +
-                    " " +
-                    func.cast(children.sort_key, String)
-                ).label("sorting_key")
-            )
-            .filter(children.parent_uid == hierarchy.c.post_uid)
-        )
-        # query the hierarchy for the post and it's comments
-        posts = (
-            db_session
-            .query(Post, func.cast(hierarchy.c.sorting_key, String))
-            .select_entity_from(hierarchy)
-            .order_by(hierarchy.c.sorting_key)
-            .all()
-        )
+        posts = _build_posts_hierarchy(db_session, post_uid)
         if posts is None:
             flash(f"Unknown post uid: {post_uid}")
             abort(HTTPStatus.NOT_FOUND)
@@ -289,4 +254,43 @@ def utility_processor():
     return dict(
         can_update_blog_post=can_update_blog_post,
         can_set_blog_post_active_state=can_set_blog_post_active_state,
+    )
+
+
+def _build_posts_hierarchy(db_session, post_uid):
+    # build the list of filters here to use in the CTE
+    filters = [
+        Post.post_uid == post_uid,
+        Post.parent_uid == None
+    ]
+    if current_user.is_anonymous or current_user.can_view_posts():
+        filters.append(Post.active == True)
+
+    # build the recursive CTE query
+    hierarchy = (
+        db_session
+        .query(Post, Post.sort_key.label("sorting_key"))
+        .filter(*filters)
+        .cte(name='hierarchy', recursive=True)
+    )
+    children = aliased(Post, name="c")
+    hierarchy = hierarchy.union_all(
+        db_session
+        .query(
+            children,
+            (
+                func.cast(hierarchy.c.sorting_key, String) +
+                " " +
+                func.cast(children.sort_key, String)
+            ).label("sorting_key")
+        )
+        .filter(children.parent_uid == hierarchy.c.post_uid)
+    )
+    # query the hierarchy for the post and it's comments
+    return (
+        db_session
+        .query(Post, func.cast(hierarchy.c.sorting_key, String))
+        .select_entity_from(hierarchy)
+        .order_by(hierarchy.c.sorting_key)
+        .all()
     )

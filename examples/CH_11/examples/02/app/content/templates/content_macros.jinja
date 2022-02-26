@@ -40,7 +40,7 @@
     dialog allowing the user to create a comment
 #}
 {% macro form_create_comment_modal_1(post) %}
-    <form 
+    <form
         name="comment"
         action="{{url_for('content_bp.blog_post_create_comment')}}"
         method="POST"
@@ -75,7 +75,7 @@
 {% endmacro %}
 
 {% macro form_create_comment_modal() %}
-    <form 
+    <form
         name="comment"
         action="{{url_for('content_bp.blog_post_create_comment')}}"
         method="POST"

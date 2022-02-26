@@ -110,6 +110,7 @@ def logout():
         redirect: Redirects to the home page
     """
     logout_user()
+    session.pop("timezone_info")
     flash("You've been logged out", "light")
     return redirect(url_for("intro_bp.home"))
 
