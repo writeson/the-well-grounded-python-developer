@@ -104,4 +104,4 @@ def _configure_logging(app, dynaconf):
 
 
 def error_page(e):
-    return render_template("error.html", e=e), 404
+    return render_template("error.html", e=e), e.code

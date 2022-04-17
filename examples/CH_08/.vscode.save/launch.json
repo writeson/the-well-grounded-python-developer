@@ -1,0 +1,120 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MyBlog 01",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/01/app.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        },
+        {
+            "name": "MyBlog 02",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/02/myblog.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        },
+        {
+            "name": "MyBlog 03",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/03/myblog.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        },
+        {
+            "name": "MyBlog 04",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/04/myblog.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        },
+        {
+            "name": "MyBlog 05",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/05/myblog.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        },
+        {
+            "name": "MyBlog 06",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/06/myblog.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        },
+        {
+            "name": "MyBlog 07",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "env": {
+                "FLASK_APP": "${workspaceFolder}/examples/07/myblog.py",
+                "FLASK_ENV": "development",
+            },
+            "args": [
+                "run"
+            ],
+            "justMyCode": false,
+            "jinja": true
+        }
+    ]
+}
