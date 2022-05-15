@@ -23,7 +23,7 @@ six==1.16.0
 SQLAlchemy==1.4.29
 tinycss2==1.1.1
 toml==0.10.2
-weasyprint==54.0
+weasyprint==55.0
 webencodings==0.5.1
 Werkzeug==2.0.2
 zopfli==0.1.9
