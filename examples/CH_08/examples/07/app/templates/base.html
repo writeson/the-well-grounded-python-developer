@@ -1,83 +1,106 @@
-{# configure the navigation items to build in the navbar #}
-{% set
-  nav_items = [
-    {"name": "Home", "link": "intro_bp.home"},
-    {"name": "About","link": "intro_bp.about"}
-  ]
-%}
+{# configure the navigation items to build in the navbar #} {% set nav_items = [
+{"name": "Home", "link": "intro_bp.home"}, {"name": "About","link":
+"intro_bp.about"} ] %}
 
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyBlog</title>
-  {% block styles %}
-  <style>
-    :root {
-        --background-url: url({{url_for("static", filename= "images/myblog_banner_50.png")}});
-    }
-  </style>
-  <link rel='shortcut icon' type='image/vnd.microsoft.icon' href="{{ url_for('static', filename='images/favicon.ico') }}" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}"/>
-  {% endblock %}
-</head>
-<body class="d-flex flex-column h-100">
-  <div class="banner card">
-    <div class="card-body">
-      <div class="col-md-4 offset-md-1">
-        <h2 class="card-title fw-bold">MyBlog Home Page</h2>
-        <p class="card-text">Just a blog to call my own</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyBlog</title>
+    {% block styles %}
+    <style>
+      :root {
+        --background-url: url({{url_for(
+            "static",
+            filename= "images/myblog_banner_50.png"
+          )}});
+      }
+    </style>
+    <link
+      rel="shortcut icon"
+      type="image/vnd.microsoft.icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    {% endblock %}
+  </head>
+  <body class="d-flex flex-column h-100">
+    <div class="banner card">
+      <div class="card-body">
+        <div class="col-md-4 offset-md-1">
+          <h2 class="card-title fw-bold">MyBlog Home Page</h2>
+          <p class="card-text">Just a blog to call my own</p>
+        </div>
       </div>
     </div>
-  </div>
-  <main class="flex-shrink-0">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand ml-2" href="{{url_for('intro_bp.home')}}">
-        <img src="{{url_for('static', filename='images/myblog_brand_icon.svg')}}"
-             alt=""
-             width="30"
-             height="24">
-        MyBlog
-      </a>
-      <button class="navbar-toggler" 
-              type="button" 
-              data-bs-toggle="collapse" 
-              data-bs-target="#navbarSupportedContent" 
-              aria-controls="navbarSupportedContent" 
-              aria-expanded="false" 
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" 
-           id="navbarSupportedContent">
-        <div class="navbar-nav">
-          {% for nav_item in nav_items %}
-            {% if request.endpoint == nav_item["link"] %}
-              <a class="nav-link ml-2 active" 
-                 aria-current="page" 
-                 href="{{url_for(nav_item['link'])}}">
-                  {{nav_item["name"]}}
-              </a>
+    <main class="flex-shrink-0">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand ml-2" href="{{url_for('intro_bp.home')}}">
+          <img
+            src="{{url_for('static', filename='images/myblog_brand_icon.svg')}}"
+            alt=""
+            width="30"
+            height="24"
+          />
+          MyBlog
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="navbar-nav">
+            {% for nav_item in nav_items %} {% if request.endpoint ==
+            nav_item["link"] %}
+            <a
+              class="nav-link ml-2 active"
+              aria-current="page"
+              href="{{url_for(nav_item['link'])}}"
+            >
+              {{nav_item["name"]}}
+            </a>
             {% else %}
-              <a class="nav-link ml-2" 
-                 href="{{url_for(nav_item['link'])}}">
-                  {{nav_item["name"]}}
-              </a>
-            {% endif %}
-          {% endfor %}
+            <a class="nav-link ml-2" href="{{url_for(nav_item['link'])}}">
+              {{nav_item["name"]}}
+            </a>
+            {% endif %} {% endfor %}
           </div>
-      </div>
-    </nav>
-    {% block content %}{% endblock %}
-  </main>
-  <footer class="footer mt-auto py-1 bg-light">
-    <div class="container text-center">
+        </div>
+      </nav>
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="footer mt-auto py-1 bg-light">
+      <div class="container text-center">
         <span class="text-muted">&copy; Copyright 2021 / MyBlog</span>
-    </div>
-  </footer>
-  {% block scripts %}
-  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-  {% endblock %}
-</body>
+      </div>
+    </footer>
+    {% block scripts %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    {% endblock %}
+  </body>
 </html>

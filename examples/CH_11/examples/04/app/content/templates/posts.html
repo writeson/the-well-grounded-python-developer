@@ -13,18 +13,19 @@
           Title: {{ post.title | safe}}
           {% if can_set_blog_post_active_state(post) %}
             {% if post.active %}
-                <span class="badge rounded-pill bg-success float-end">Active</span>
-              {% else %}
-                <span class="badge rounded-pill bg-danger float-end">Inactive</span>
-              {% endif %}
+              <span class="badge rounded-pill bg-success float-end">Active</span>
+            {% else %}
+              <span class="badge rounded-pill bg-danger float-end">Inactive</span>
             {% endif %}
+          {% endif %}
         </h5>
         <div class="card-text myblog-post">
           {{ post.content | truncate(100, end="...") | markdown}}
         </div>
       </div>
     </a>
-    {% endfor %} {{ macros.render_pagination(posts, "content_bp.blog_posts")}}
+    {% endfor %}
+    {{ macros.render_pagination(posts, "content_bp.blog_posts")}}
   {% else %}
     <h4>There are currently no posts in MyBlog</h4>
   {% endif %}

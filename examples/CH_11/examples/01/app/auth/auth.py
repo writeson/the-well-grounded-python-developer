@@ -27,6 +27,7 @@ from werkzeug.urls import url_parse
 from ..emailer import send_mail
 import json
 
+
 logger = getLogger(__name__)
 
 
@@ -49,7 +50,6 @@ def login():
     if form.cancel.data:
         return redirect(url_for("intro_bp.home"))
     if form.validate_on_submit():
-        session["timezone_info"] = json.loads(form.timezone_info.data)
         with db_session_manager() as db_session:
             user = (
                 db_session
@@ -61,6 +61,7 @@ def login():
                 flash("Invalid email or password", "warning")
                 return redirect(url_for("auth_bp.login"))
             login_user(user, remember=form.remember_me.data)
+            session["timezone_info"] = json.loads(form.timezone_info.data)
             next = request.args.get("next")
             if not next or url_parse(next).netloc != "":
                 next = url_for("intro_bp.home")
@@ -109,6 +110,7 @@ def logout():
         redirect: Redirects to the home page
     """
     logout_user()
+    session.pop("timezone_info")
     flash("You've been logged out", "light")
     return redirect(url_for("intro_bp.home"))
 
@@ -266,7 +268,7 @@ def send_confirmation_email(user):
     to = user.email
     subject = "Confirm Your Email"
     contents = (
-        f"""Dear {user.first_name},
+        f"""Hi {user.first_name},
         Welcome to MyBlog, please click the link to confirm your email within {timeout} hours:
         {confirmation_url}
         Thank you!

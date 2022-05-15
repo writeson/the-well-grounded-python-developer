@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from flask import (
     render_template,
     redirect,
@@ -9,13 +10,18 @@ from flask import (
 )
 from logging import getLogger
 from . import content_bp
-from ..models import db_session_manager, Post, db, Role
+from ..models import (
+    db_session_manager,
+    Post,
+    db,
+    Role,
+)
 from flask_login import current_user
 from flask_login import login_required
 from .forms import (
     PostForm,
     PostUpdateForm,
-    PostCommentForm
+    PostCommentForm,
 )
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql.expression import func
@@ -38,7 +44,7 @@ def blog_posts():
     elif request.args.get("action") == "create":
         return blog_post_create()
     else:
-        abort(404)
+        abort(HTTPStatus.METHOD_NOT_ALLOWED)
 
 
 def blog_posts_display():
@@ -55,7 +61,7 @@ def blog_posts_display():
         posts = (
             db_session
             .query(Post)
-            .filter(Post.parent_uid is None)
+            .filter(Post.parent_uid == None)
             .order_by(Post.updated.desc())
         )
         # can the current user view only active posts:
@@ -96,12 +102,15 @@ def blog_post_create():
             db_session.add(post)
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' created")
-            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
+            return redirect(
+                url_for("content_bp.blog_post", post_uid=post.post_uid),
+                code=HTTPStatus.CREATED
+            )
     return render_template("post_create.html", form=form)
 
 
 @content_bp.get("/blog_posts/<post_uid>")
-@content_bp.post("/blog_posts/<post_uid>")
+@content_bp.put("/blog_posts/<post_uid>")
 def blog_post(post_uid=None):
     """This function dispatches control to the correct handler
     based on the URL and the query string
@@ -114,7 +123,7 @@ def blog_post(post_uid=None):
     elif request.args.get("action") == "update":
         return blog_post_update(post_uid)
     else:
-        abort(404)
+        abort(HTTPStatus.METHOD_NOT_ALLOWED)
 
 
 def blog_post_display(post_uid):
@@ -128,45 +137,10 @@ def blog_post_display(post_uid):
     logger.debug("rendering blog post page")
     form = PostCommentForm()
     with db_session_manager() as db_session:
-        # build the list of filters here to use in the CTE
-        filters = [
-            Post.post_uid == post_uid,
-            Post.parent_uid is None
-        ]
-        if current_user.is_anonymous or current_user.can_view_posts():
-            filters.append(Post.active == True)
-
-        # build the recursive CTE query
-        hierarchy = (
-            db_session
-            .query(Post, Post.sort_key.label("sorting_key"))
-            .filter(*filters)
-            .cte(name='hierarchy', recursive=True)
-        )
-        children = aliased(Post, name="c")
-        hierarchy = hierarchy.union_all(
-            db_session
-            .query(
-                children,
-            (
-                func.cast(hierarchy.c.sorting_key, String) +
-                " " +
-                func.cast(children.sort_key, String)
-            ).label("sorting_key")
-            )
-            .filter(children.parent_uid == hierarchy.c.post_uid)
-        )
-        # query the hierarchy for the post and it's comments
-        posts = (
-            db_session
-            .query(Post, func.cast(hierarchy.c.sorting_key, String))
-            .select_entity_from(hierarchy)
-            .order_by(hierarchy.c.sorting_key)
-            .all()
-        )
+        posts = _build_posts_hierarchy(db_session, post_uid)
         if posts is None:
             flash(f"Unknown post uid: {post_uid}")
-            abort(404)
+            abort(HTTPStatus.NOT_FOUND)
         return render_template("post.html", form=form, posts=posts)
 
 
@@ -190,7 +164,7 @@ def blog_post_update(post_uid=None):
         post = post.one_or_none()
         if post is None:
             flash(f"Unknown post uid: {post_uid}")
-            abort(404)
+            abort(HTTPStatus.NOT_FOUND)
         form = PostUpdateForm(obj=post)
         if form.cancel.data:
             return redirect(url_for("intro_bp.home"))
@@ -203,7 +177,10 @@ def blog_post_update(post_uid=None):
                 post.active = False
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' updated")
-            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
+            return redirect(
+                url_for("content_bp.blog_post", post_uid=post.post_uid),
+                code=HTTPStatus.ACCEPTED
+            )
         return render_template("post_update.html", form=form, post=post)
 
 
@@ -277,4 +254,43 @@ def utility_processor():
     return dict(
         can_update_blog_post=can_update_blog_post,
         can_set_blog_post_active_state=can_set_blog_post_active_state,
+    )
+
+
+def _build_posts_hierarchy(db_session, post_uid):
+    # build the list of filters here to use in the CTE
+    filters = [
+        Post.post_uid == post_uid,
+        Post.parent_uid == None
+    ]
+    if current_user.is_anonymous or current_user.can_view_posts():
+        filters.append(Post.active == True)
+
+    # build the recursive CTE query
+    hierarchy = (
+        db_session
+        .query(Post, Post.sort_key.label("sorting_key"))
+        .filter(*filters)
+        .cte(name='hierarchy', recursive=True)
+    )
+    children = aliased(Post, name="c")
+    hierarchy = hierarchy.union_all(
+        db_session
+        .query(
+            children,
+            (
+                func.cast(hierarchy.c.sorting_key, String) +
+                " " +
+                func.cast(children.sort_key, String)
+            ).label("sorting_key")
+        )
+        .filter(children.parent_uid == hierarchy.c.post_uid)
+    )
+    # query the hierarchy for the post and it's comments
+    return (
+        db_session
+        .query(Post, func.cast(hierarchy.c.sorting_key, String))
+        .select_entity_from(hierarchy)
+        .order_by(hierarchy.c.sorting_key)
+        .all()
     )

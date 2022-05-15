@@ -8,13 +8,13 @@ You will need a Python virtual environment to run the programs so that any modul
 
 ```console
 $ cd CH_06
-$ pyenv local 3.9.2
+$ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install --upgrade pip
 ```
 
-Once you have a local Python virtual environment activated your command prompt should be prefixed with `(.venv)`. This indicates the Python system in the current directory is active and ready to run. 
+Once you have a local Python virtual environment activated your command prompt should be prefixed with `(.venv)`. This indicates the Python system in the current directory is active and ready to run.
 
 To install the modules necessary for this chapter, run the following command line while your Python virtual environment is active:
 
@@ -26,6 +26,6 @@ The command will pip install any modules necessary to run the example programs i
 
 ## Example Programs
 
-* example_01 - demonstrates generating an exception and letting it bubble upward till the program exits.
-* example_02 - demonstrates generating an exception, catching and handling it and prompting the user to try again.
-* example_03 - demonstrates handling multiple exceptions, logging them and prompting the user to continue until the program runs successfully.
+- 01 - demonstrates generating an exception and letting it bubble upward till the program exits.
+- 02 - demonstrates generating an exception, catching and handling it and prompting the user to try again.
+- 03 - demonstrates handling multiple exceptions, logging them and prompting the user to continue until the program runs successfully.

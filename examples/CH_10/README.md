@@ -8,7 +8,7 @@ You will need a Python virtual environment to run the programs so that any modul
 
 ```console
 $ cd CH_10
-$ pyenv local 3.9.2
+$ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install --upgrade pip
@@ -26,5 +26,5 @@ pip install -r requirements.txt
 
 To run the example programs just enter the command line shortcut shown in the list below. The list below shows the shortcut command and a brief description of what the command does.
 
-- Example 01 uses CSV files to provide data for an imaginary company and produce invoice PDF files for all the orders in the system
-- Example 02 uses a SQLite database and SQLAlchemy to replicate the functionality of example 01
+- 01 uses CSV files to provide data for an imaginary company and produce invoice PDF files for all the orders in the system
+- 02 uses a SQLite database and SQLAlchemy to replicate the functionality of example 01

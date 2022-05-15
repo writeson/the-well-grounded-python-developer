@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from flask import (
     render_template,
     redirect,
@@ -22,9 +23,12 @@ from flask_login import login_required
 from .forms import (
     PostForm,
     PostUpdateForm,
-    PostCommentForm
+    PostCommentForm,
 )
 from sqlalchemy.orm import aliased
+from sqlalchemy.sql.expression import func
+from sqlalchemy.types import String
+
 
 logger = getLogger(__name__)
 
@@ -43,7 +47,7 @@ def blog_posts():
     elif request.args.get("action") == "create":
         return blog_post_create()
     else:
-        abort(404)
+        abort(HTTPStatus.METHOD_NOT_ALLOWED)
 
 
 def blog_posts_display():
@@ -101,12 +105,15 @@ def blog_post_create():
             db_session.add(post)
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' created")
-            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
+            return redirect(
+                url_for("content_bp.blog_post", post_uid=post.post_uid),
+                code=HTTPStatus.CREATED
+            )
     return render_template("post_create.html", form=form)
 
 
 @content_bp.get("/blog_posts/<post_uid>")
-@content_bp.post("/blog_posts/<post_uid>")
+@content_bp.put("/blog_posts/<post_uid>")
 def blog_post(post_uid=None):
     """This function dispatches control to the correct handler
     based on the URL and the query string
@@ -119,7 +126,7 @@ def blog_post(post_uid=None):
     elif request.args.get("action") == "update":
         return blog_post_update(post_uid)
     else:
-        abort(404)
+        abort(HTTPStatus.METHOD_NOT_ALLOWED)
 
 
 def blog_post_display(post_uid):
@@ -136,7 +143,7 @@ def blog_post_display(post_uid):
         posts = _build_posts_hierarchy(db_session, post_uid)
         if posts is None:
             flash(f"Unknown post uid: {post_uid}")
-            abort(404)
+            abort(HTTPStatus.NOT_FOUND)
         return render_template("post.html", form=form, posts=posts)
 
 
@@ -160,7 +167,7 @@ def blog_post_update(post_uid=None):
         post = post.one_or_none()
         if post is None:
             flash(f"Unknown post uid: {post_uid}")
-            abort(404)
+            abort(HTTPStatus.NOT_FOUND)
         form = PostUpdateForm(obj=post)
         if form.cancel.data:
             return redirect(url_for("intro_bp.home"))
@@ -173,7 +180,10 @@ def blog_post_update(post_uid=None):
                 post.active = False
             db_session.commit()
             flash(f"Blog post '{form.title.data.strip()}' updated")
-            return redirect(url_for("content_bp.blog_post", post_uid=post.post_uid))
+            return redirect(
+                url_for("content_bp.blog_post", post_uid=post.post_uid),
+                code=HTTPStatus.ACCEPTED
+            )
         return render_template("post_update.html", form=form, post=post)
 
 
@@ -199,7 +209,7 @@ def blog_post_create_comment():
             return redirect(url_for("content_bp.blog_post", post_uid=root_post.post_uid))
     else:
         flash("No comment to create")
-    return redirect(url_for("intro_bp.home"))
+    return redirect(request.referrer)
 
 
 @content_bp.context_processor
@@ -274,14 +284,18 @@ def _build_posts_hierarchy(db_session, post_uid):
         db_session
         .query(
             children,
-            (hierarchy.c.sorting_key + " " + children.sort_key).label("sorting_key")
+            (
+                func.cast(hierarchy.c.sorting_key, String) +
+                " " +
+                func.cast(children.sort_key, String)
+            ).label("sorting_key")
         )
         .filter(children.parent_uid == hierarchy.c.post_uid)
     )
     # query the hierarchy for the post and it's comments
     return (
         db_session
-        .query(Post, hierarchy.c.sorting_key)
+        .query(Post, func.cast(hierarchy.c.sorting_key, String))
         .select_entity_from(hierarchy)
         .order_by(hierarchy.c.sorting_key)
         .all()
@@ -313,17 +327,17 @@ def notify_root_post_followers(db_session, root_post):
         db_session : The database session to use
         root_post : The root post that had an update
     """
+    post_url = url_for(
+        "content_bp.blog_post",
+        post_uid=root_post.post_uid,
+        _external=True
+    )
     for user_following in root_post.users_following:
-        post_url = url_for(
-            "content_bp.blog_post",
-            post_uid=root_post.post_uid,
-            _external=True
-        )
         to = user_following.email
         subject = "A post you're following has been updated"
         contents = (
             f"""Hi {user_following.first_name},
-            A blog post you're following has had a comment update added to it. You can view
+            A blog post you're following has had a comment added to it. You can view
             that post here: {post_url}
             Thank you!
             """

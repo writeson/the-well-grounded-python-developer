@@ -8,7 +8,7 @@ You will need a Python virtual environment to run the programs so that any modul
 
 ```console
 $ cd CH_07
-$ pyenv local 3.9.2
+$ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install --upgrade pip
@@ -26,10 +26,10 @@ The command will pip install any modules necessary to run the example programs i
 
 ## Example Programs
 
-- Example 01 modifies the web application to use Bootstrap for styling and a media query for responsive design of the banner
-- Example 02 refactors the web application into a better, more scalable structure
-- Example 03 refactors the web application to use Flask Blueprints
-- Example 04 adds Bootstrap navbar navigation to the application, Flask Blueprints to modularize the app and an about page to demonstrate it.
-- Example 05 adds the flask debug toolbar
-- Example 06 adds Python logging to the MyBlog application
-- Example 07 adds a favicon to the application and a brand graphic to the navigation bar
+- 01 modifies the web application to use Bootstrap for styling and a media query for responsive design of the banner
+- 02 refactors the web application into a better, more scalable structure
+- 03 refactors the web application to use Flask Blueprints
+- 04 adds Bootstrap navbar navigation to the application, Flask Blueprints to modularize the app and an about page to demonstrate it.
+- 05 adds the flask debug toolbar
+- 06 adds Python logging to the MyBlog application
+- 07 adds a favicon to the application and a brand graphic to the navigation bar
