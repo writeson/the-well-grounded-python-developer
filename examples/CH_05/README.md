@@ -8,7 +8,7 @@ You will need a Python virtual environment to run the programs so that any modul
 
 ```console
 $ cd CH_05
-$ pyenv local 3.9.2
+$ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install --upgrade pip
@@ -24,10 +24,10 @@ pip install -r requirements.txt
 
 ## Example Programs
 
-- example_01 - demonstrates creating and using a simple Person class and class instance.
-- example_02 - demonstrates the first iteration of the animated shapes program, animating a single, color changing rectangle.
-- example_03 - demonstrates the second iteration of the animated shapes program, animating a single, color changing rectangle, but using decorators on the attributes.
-- example_04 - demonstrates creating and using a decorator function.
-- example_05 - demonstrates the third iteration of the animated shapes program, animating a single, color changing rectangle, but making use of inheritance.
-- example_06 - demonstrates the fourth iteration of the animated shapes program, animating multiple different color changing shapes using polymorphism
-- example_07 - demonstrates the fifth iteration of the animated shapes program, animating multiple different color changing shapes and making use of composition
+- 01 - demonstrates creating and using a simple Person class and class instance.
+- 02 - demonstrates the first iteration of the animated shapes program, animating a single, color changing rectangle.
+- 03 - demonstrates the second iteration of the animated shapes program, animating a single, color changing rectangle, but using decorators on the attributes.
+- 04 - demonstrates creating and using a decorator function.
+- 05 - demonstrates the third iteration of the animated shapes program, animating a single, color changing rectangle, but making use of inheritance.
+- 06 - demonstrates the fourth iteration of the animated shapes program, animating multiple different color changing shapes using polymorphism
+- 07 - demonstrates the fifth iteration of the animated shapes program, animating multiple different color changing shapes and making use of composition

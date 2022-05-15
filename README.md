@@ -5,7 +5,7 @@
 This repository contains the example code that accompanies the book. The code is organized under an `examples` root file. Each chapter has its own directory, and all of the examples for that chapter (if it has any) have one of two styles:
 
 * Python file named XX.py if the entire example is in a single file
-* XX as a directory name if the example code consists of multiple files in that directory
+* CH_XX as a directory name if the example code consists of multiple files in that directory
 
 ## General Installation
 
@@ -23,4 +23,4 @@ Follow these steps to install and setup the repository:
 
 ## Chapter Installation
 
-Each chapter has it's own `README.md` file that explains how to install any modules needed by the example programs in that chpater.
+Where necessary, each chapter has it's own `README.md` file that explains how to install any modules needed by the example programs in that chapter.

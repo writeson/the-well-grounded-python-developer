@@ -8,7 +8,7 @@ You will need a Python virtual environment to run the programs so that any modul
 
 ```console
 $ cd CH_04
-$ pyenv local 3.9.2
+$ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install --upgrade pip
@@ -18,6 +18,6 @@ Once you have a local Python virtual environment activated your command prompt s
 
 ## Example Programs
 
-- example_01 - demonstrates a function splitting a string name into it's component parts
-- example_02 - demonstrates the single responsibility pattern
-- example_03 - demonstrates side effects of passing parameters by reference
+- 01 - demonstrates a function splitting a string name into it's component parts
+- 02 - demonstrates the single responsibility pattern
+- 03 - demonstrates side effects of passing parameters by reference

@@ -8,7 +8,7 @@ You will need a Python virtual environment to run the programs so that any modul
 
 ```console
 $ cd CH_07
-$ pyenv local 3.9.2
+$ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install --upgrade pip
@@ -24,6 +24,6 @@ pip install -r requirements.txt
 
 ## Example Programs
 
-- example_01 - demonstrates a simple "Hello World" web application
-- example_02 - demonstrates a web application with dynamically updated data
-- example_03 - demonstrates a web application with dynamically updated data and user interaction
+- 01 - demonstrates a simple "Hello World" web application
+- 02 - demonstrates a web application with dynamically updated data
+- 03 - demonstrates a web application with dynamically updated data and user interaction

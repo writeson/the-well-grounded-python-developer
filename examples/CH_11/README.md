@@ -26,4 +26,7 @@ The command will pip install any modules necessary to run the example programs i
 
 ## Example Programs
 
-- Example 01 Adds the ability to create content posts using markdown syntax
+- 01 Adds the ability to create content posts using markdown syntax
+- 02 Adds the ability to edit content posts using markdown syntax and creates the hierarchy of posts
+- 03 Adds the ability for users to follow content creators and to be notified via email about updates to creators they follow
+- 04 Adds the ability to create content post comments and for creators to be notified via email about comment creation
