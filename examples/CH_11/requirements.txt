@@ -36,7 +36,7 @@ premailer==3.10.0
 pycodestyle==2.8.0
 pycparser==2.21
 Pygments==2.11.2
-PyJWT==2.3.0
+PyJWT==2.4.0
 python-dateutil==2.8.2
 python-editor==1.0.4
 pytz==2021.3
