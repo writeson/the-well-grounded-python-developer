@@ -6,8 +6,7 @@ def full_name_and_print(fname: str, mname: str, lname: str) -> None:
         mname {str} -- middle name
         lname {str} -- last name
     """
-    full_name = " ".join([fname, mname, lname])
-    full_name = " ".join(full_name.split())
+    full_name = " ".join(name for name in [fname, mname, lname] if name)
     print(full_name)
 
 
@@ -22,8 +21,8 @@ def full_name(fname: str, mname: str, lname: str) -> str:
     Returns:
         str -- the full name with only a single space between names
     """
-    full_name = " ".join([fname, mname, lname])
-    return " ".join(full_name.split())
+    full_name = " ".join(name for name in [fname, mname, lname] if name)
+    return full_name
 
 
 def main():

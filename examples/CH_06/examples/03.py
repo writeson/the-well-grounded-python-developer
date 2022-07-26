@@ -8,29 +8,31 @@ import logging
 logger = logging.getLogger(__file__)
 
 
-class OutsideRangeException(ValueError):
+class OutsideRangeException(Exception):
     pass
 
 
-def calculate(parameter: int) -> float:
-    """This funtions performs a calculation on the passed parameter
-    and returns the results to the caller
+def range_check_user_input(parameter: int) -> float:
+    """This funtions performs a range check on the user input
 
     Arguments:
-        parameter {int} -- The parameter to use for the calculation
+        parameter {int} -- The parameter to range check
 
     Returns:
-        float -- The results of the calculation
+        float -- The parameter if it is within the range
+
+    Exception:
+        Raises OutsideRangeException if parameter violates range
     """
     if not 0 < parameter <= 100:
         raise OutsideRangeException("range exceeded", parameter)
 
-    return parameter * math.pi
+    return parameter
 
 
-def prompt_user_for_data():
+def get_data_from_user():
     """This function gathers input from the user and
-    passes it to calculate to perform a calculation
+    passes it to range check function
     """
     successful = False
     while not successful:
@@ -45,7 +47,7 @@ def prompt_user_for_data():
             continue
 
         try:
-            result = calculate(parameter)
+            result = range_check_user_input(parameter)
         except OutsideRangeException as e:
             logger.exception("Parameter outside of range", e)
             print(
@@ -54,12 +56,12 @@ def prompt_user_for_data():
             )
             continue
 
-        print(f"Calculated result = {result}")
+        print(f"Parameter within range = {result}")
         successful = True
 
 
 def main():
-    prompt_user_for_data()
+    get_data_from_user()
 
 
 if __name__ == "__main__":
