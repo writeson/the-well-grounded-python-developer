@@ -1,38 +1,56 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyBlog</title>
-  {% block styles %}
-  <style>
-    :root {
-        --background-url: url({{url_for("static", filename= "images/myblog_banner_50.png")}});
-    }
-  </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}"/>
-  {% endblock styles %}
-</head>
-<body class="d-flex flex-column h-100">
-  <div class="banner card">
-    <div class="card-body">
-      <div class="col-md-4 offset-md-1">
-        <h2 class="card-title fw-bold">MyBlog Home Page</h2>
-        <p class="card-text">Just a blog to call my own</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyBlog</title>
+    {% block styles %}
+    <style>
+      :root {
+        --background-url: url({{url_for(
+            "static",
+            filename= "images/myblog_banner_50.png"
+          )}});
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    {% endblock styles %}
+  </head>
+  <body class="d-flex flex-column h-100">
+    <div class="banner card">
+      <div class="card-body">
+        <div class="col-md-4 offset-md-1">
+          <h2 class="card-title fw-bold">MyBlog Home Page</h2>
+          <p class="card-text">Just a blog to call my own</p>
+        </div>
       </div>
     </div>
-  </div>
-  <main class="flex-shrink-0">
-    {% block content %}{% endblock %}
-  </main>
-  <footer class="footer mt-auto py-1 bg-light">
-    <div class="container text-center">
+    <main class="flex-shrink-0">{% block content %}{% endblock %}</main>
+    <footer class="footer fixed-bottom py-1 bg-light">
+      <div class="container text-center">
         <span class="text-muted">&copy; Copyright 2021 / MyBlog</span>
-    </div>
-  </footer>
-  {% block scripts %}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  {% endblock %}
-</body>
+      </div>
+    </footer>
+    {% block scripts %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    {% endblock %}
+  </body>
 </html>
