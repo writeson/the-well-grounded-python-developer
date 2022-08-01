@@ -48,7 +48,7 @@ SQLAlchemy==1.4.22
 toml==0.10.2
 unsync==1.4.0
 urllib3==1.26.8
-waitress==2.0.0
+waitress==2.1.2
 webencodings==0.5.1
 Werkzeug==2.0.3
 Whoosh==2.7.4
