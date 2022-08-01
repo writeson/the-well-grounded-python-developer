@@ -1,20 +1,13 @@
-{% extends "base.html" %}
-
-{% block title %}{{ e.name }}{% endblock %}
-
-{% block content %}
-<div class="error_page mx-auto mt-3" style="width: 50%;">
+{% extends "base.html" %} {% block title %}{{ e.name }}{% endblock %} {% block
+content %}
+<div class="error_page mx-auto mt-3" style="width: 50%">
   <div class="container">
-      <div class="card text-center">
-          <h5 class="card-header">
-              {{ e.code }} : {{ e.name }}
-          </h5>
-          <div class="card-body">
-              <div class="card-text">
-                  {{ e.description }}
-              </div>
-          </div>
+    <div class="card text-center">
+      <h5 class="card-header">{{ e.code }} : {{ e.name }}</h5>
+      <div class="card-body">
+        <div class="card-text">{{ e.name }}</div>
       </div>
+    </div>
   </div>
 </div>
 {% endblock %}
