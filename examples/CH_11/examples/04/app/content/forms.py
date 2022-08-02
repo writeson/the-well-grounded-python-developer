@@ -4,6 +4,7 @@ from wtforms import StringField, TextAreaField, SubmitField
 from flask_pagedown.fields import PageDownField
 from wtforms.fields.simple import HiddenField
 from wtforms.validators import DataRequired, Length
+import bleach
 
 
 def remove_html_and_script_tags(input_string: str) -> str:
@@ -16,7 +17,7 @@ def remove_html_and_script_tags(input_string: str) -> str:
     Returns:
         str: the input string cleaned of html and script tags
     """
-    return re.sub('<[^<]+?>', '', input_string) if input_string is not None else input_string
+    return bleach.clean(input_string) if input_string is not None else input_string
 
 
 class PostForm(FlaskForm):
