@@ -1,3 +1,5 @@
+<img align="center" src="https://github.com/writeson/writeson/blob/main/images/about_me_slide.png" width="1000px">
+
 # The Well-Grounded Python Developer
 
 ## Introduction
