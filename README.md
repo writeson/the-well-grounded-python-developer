@@ -8,8 +8,6 @@
     <a href="https://instagram.com/writes_on/" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v4/icons/instagram.svg"" alt="monga_ria" height="30" width="40" /></a>
 </p>
 
-# The Well-Grounded Python Developer
-
 ## Introduction
 
 This repository contains the example code that accompanies the book. The code is organized under an `examples` root file. Each chapter has its own directory, and all of the examples for that chapter (if it has any) have one of two styles:
@@ -19,7 +17,7 @@ This repository contains the example code that accompanies the book. The code is
 
 ## General Installation
 
-Because this is a repository of Python code, you need to have Python installed on your computer. Preferably this would use the `pyenv` tool. This tool allows you to install multiple versions of Python if you'd like, but more importantly it doesn't interfere with the system installed version if it exists.
+Because this is a repository of Python code, you need to have Python installed on your computer. Preferably, use the `pyenv` tool. This tool allows you to install multiple versions of Python if you'd like, but more importantly it doesn't interfere with the version of Python that might already be installed on your computer.
 
 On a Mac, the easiest way to install pyenv is to use Homebrew. This is what's recommended at this link, which describes how to install it for all environments. Here is the link to get [pyenv](https://github.com/pyenv/pyenv)
 
