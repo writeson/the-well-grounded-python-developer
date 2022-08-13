@@ -33,4 +33,15 @@ Follow these steps to install and setup the repository:
 
 Where necessary, each chapter has it's own `README.md` file that explains how to install any modules needed by the example programs in that chapter.
 
+### Chapters with README files
+
+- [Chapter 4](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_04)
+- [Chapter 5](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_05)
+- [Chapter 6](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_06)
+- [Chapter 7](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_07)
+- [Chapter 8](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_08)
+- [Chapter 9](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_09)
+- [Chapter 10](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_10)
+- [Chapter 11](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_11)
+
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Ria700.Ria700)
