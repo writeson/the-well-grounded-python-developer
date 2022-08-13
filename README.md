@@ -1,4 +1,4 @@
-<img align="center" src="https://github.com/writeson/writeson/blob/main/images/about_me_slide.png" width="1000px">
+<img align="center" src="https://github.com/writeson/the-well-grounded-python-developer/blob/integration/images/the-well-grounded-python-developer.jpg" width="1000px">
 
 # The Well-Grounded Python Developer
 
