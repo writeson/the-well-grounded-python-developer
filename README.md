@@ -35,13 +35,15 @@ Where necessary, each chapter has it's own `README.md` file that explains how to
 
 ### Chapters with README files
 
-- [Chapter 4](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_04)
-- [Chapter 5](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_05)
-- [Chapter 6](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_06)
-- [Chapter 7](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_07)
-- [Chapter 8](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_08)
-- [Chapter 9](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_09)
-- [Chapter 10](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_10)
-- [Chapter 11](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_11)
+- Groundwork
+  - [Chapter 4](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_04) - Where Developers and Computers Meet
+  - [Chapter 5](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_05) - The Object of a Conversation
+  - [Chapter 6](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_06) - Exceptional Events
+- Fieldwork
+  - [Chapter 7](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_07) - Sharing With the World
+  - [Chapter 8](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_08) - Doing it With Style
+  - [Chapter 9](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_09) - Do I Know You?
+  - [Chapter 10](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_10) - Persistence Means Never Having to say Goodbye
+  - [Chapter 11](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_11) - I've Got Something to Say
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Ria700.Ria700)
