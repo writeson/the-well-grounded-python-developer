@@ -24,12 +24,12 @@ gunicorn==20.1.0
 idna==3.3
 itsdangerous==2.0.1
 Jinja2==3.0.3
-lxml==4.6.5
-Mako==1.1.6
+lxml==4.9.1
+mako==1.2.2
 MarkupSafe==2.0.1
 premailer==3.10.0
 pycparser==2.21
-PyJWT==2.3.0
+pyjwt==2.4.0
 python-dateutil==2.8.2
 python-editor==1.0.4
 PyYAML==6.0
@@ -38,7 +38,7 @@ six==1.16.0
 SQLAlchemy==1.4.27
 unsync==1.4.0
 urllib3==1.26.7
-waitress==2.1.1
+waitress==2.1.2
 Werkzeug==2.0.2
 WTForms==3.0.0
 yagmail==0.14.260
