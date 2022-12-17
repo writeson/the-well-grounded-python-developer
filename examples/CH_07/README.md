@@ -1,6 +1,6 @@
-# Chapter 7 Example Programs
+# Chapter 8 Example Programs
 
-This directory contains the Chapter 7 examples from the book and scripts to install and run those examples.
+This directory contains the Chapter 8 examples from the book and scripts to install and run those examples.
 
 ## Installation
 
@@ -16,14 +16,20 @@ $ pip install --upgrade pip
 
 Once you have a local Python virtual environment activated your command prompt should be prefixed with `(.venv)`. This indicates the Python system in the current directory is active and ready to run.
 
-To install the modules necessary, for this chapter the following command line while your Python virtual environment is active:
+To install modules necessary for this chapter run the following command line with your Python virtual environment active:
 
 ```console
 pip install -r requirements.txt
 ```
 
+The command will pip install any modules necessary to run the example programs in the chapter and create shortcuts to run the example programs.
+
 ## Example Programs
 
-- 01 - demonstrates a simple "Hello World" web application
-- 02 - demonstrates a web application with dynamically updated data
-- 03 - demonstrates a web application with dynamically updated data and user interaction
+- 01 modifies the web application to use Bootstrap for styling and a media query for responsive design of the banner
+- 02 refactors the web application into a better, more scalable structure
+- 03 refactors the web application to use Flask Blueprints
+- 04 adds Bootstrap navbar navigation to the application, Flask Blueprints to modularize the app and an about page to demonstrate it.
+- 05 adds the flask debug toolbar
+- 06 adds Python logging to the MyBlog application
+- 07 adds a favicon to the application and a brand graphic to the navigation bar
