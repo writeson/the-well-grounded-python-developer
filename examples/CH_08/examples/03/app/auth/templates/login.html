@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "macros.jinja" as macros %}
+
+{% block content %}
+<div class="login-wrapper mx-auto mt-3">
+    <div class="container login">
+        <form name="login" method="POST" novalidate>
+            <div class="card">
+                <h5 class="card-header">
+                    User Login
+                </h5>
+                <div class="card-body">
+                    <div class="card-text">
+                        {{form.csrf_token}}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"
+                              ><i class="bi bi-envelope fs-4"></i
+                            ></span>
+                            <div class="form-floating form-floating-group flex-grow-1">
+                              {{form.email(class_="form-control")}}
+                              {{form.email.label(class_="form-label")}}
+                            </div>
+                          </div>
+                          {{macros.validation_errors(form.email.errors)}}
+                          <div class="input-group mb-3">
+                            <span class="input-group-text"
+                              ><i class="bi bi-key fs-4"></i
+                            ></span>
+                            <div class="form-floating form-floating-group flex-grow-1">
+                              {{form.password(class_="form-control")}}
+                              {{form.password.label(class_="form-label")}}
+                            </div>
+                          </div>
+                        {{macros.validation_errors(form.password.errors)}}
+                        <div class="mb-3">
+                            {{form.remember_me}}
+                            {{form.remember_me.label(class_="form-check-label")}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    {{form.login(class_="btn btn-primary me-2")}}
+                    {{form.cancel(class="btn btn-warning")}}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/login.css') }}" />
+{% endblock %}
