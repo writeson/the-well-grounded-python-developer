@@ -1,6 +1,5 @@
 from contextlib import contextmanager
 from enum import Flag, auto
-from flask import current_app
 from flask_bcrypt import (
     generate_password_hash,
     check_password_hash
@@ -9,13 +8,6 @@ from . import db
 from flask_login import UserMixin
 from uuid import uuid4
 from datetime import datetime, timezone
-from itsdangerous import (
-    URLSafeTimedSerializer,
-    SignatureExpired,
-    BadSignature
-)
-from time import time
-import jwt
 
 
 @contextmanager
@@ -56,13 +48,12 @@ class User(UserMixin, db.Model):
     """
     __tablename__ = "user"
     user_uid = db.Column(db.String, primary_key=True, default=get_uuid)
-    role_uid = db.Column(db.String, db.ForeignKey("role.role_uid"), index=True, nullable=False)
+    role_uid = db.Column(db.String, db.ForeignKey("role.role_uid"), nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False, unique=True, index=True)
     hashed_password = db.Column("password", db.String, nullable=False)
     active = db.Column(db.Boolean, nullable=False, default=True)
-    confirmed = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
     updated = db.Column(
         db.DateTime,
@@ -85,51 +76,11 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.hashed_password, password)
 
-    def confirmation_token(self):
-        serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
-        return serializer.dumps({"confirm": self.user_uid})
-
-    def confirm_token(self, token):
-        serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
-        with db_session_manager() as db_session:
-            confirmation_link_timeout = current_app.config.get("CONFIRMATION_LINK_TIMEOUT")
-            timeout = confirmation_link_timeout * 60 * 1000
-            try:
-                data = serializer.loads(token, max_age=timeout)
-                if data.get("confirm") != self.user_uid:
-                    return False
-                self.confirmed = True
-                db_session.add(self)
-                return True
-            except (SignatureExpired, BadSignature):
-                return False
-
-    def get_reset_token(self, timeout):
-        timeout *= 60
-        return jwt.encode(
-            {
-                "reset_password": self.user_uid,
-                "exp": time() + timeout,
-            },
-            current_app.config["SECRET_KEY"],
-            algorithm="HS256"
-        )
-
-    @staticmethod
-    def verify_reset_token(token):
-        user_uid = jwt.decode(
-            token,
-            current_app.config["SECRET_KEY"],
-            algorithms=["HS256"]
-        )["reset_password"]
-        return user_uid
-
     def __repr__(self):
         return f"""
         user_uid: {self.user_uid}
         name: {self.first_name} {self.last_name}
         email: {self.email}
-        confirmed: {self.confirmed}
         active: {'True' if self.active else 'False'}
             role_uid: {self.role.role_uid}
             name: {self.role.name}
@@ -161,7 +112,7 @@ class Role(db.Model):
     name = db.Column(db.String, nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
     raw_permissions = db.Column(db.Integer)
-    users = db.relationship("User", backref=db.backref("role", lazy="joined"))
+    users = db.relationship("User", backref="role", lazy="joined")
     active = db.Column(db.Boolean, nullable=False, default=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
     updated = db.Column(
@@ -198,13 +149,14 @@ class Role(db.Model):
                 "description": "administrator user with access to all of the application",
                 "raw_permissions": (
                     Role.Permissions.REGISTERED |
-                    Role.Permissions.EDITOR | Role.Permissions.ADMINISTRATOR
+                    Role.Permissions.EDITOR |
+                    Role.Permissions.ADMINISTRATOR
                 ).value
             }
         ]
         with db_session_manager() as db_session:
             for r in roles:
-                role = db_session.query(Role).filter(Role.name == r.get("name")).one_or_none()
+                role = db.session.query(Role).filter(Role.name == r.get("name")).one_or_none()
 
                 # is there no existing role by a given name?
                 if role is None:

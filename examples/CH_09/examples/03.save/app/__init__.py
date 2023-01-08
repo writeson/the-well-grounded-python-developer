@@ -8,7 +8,6 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 import logging
 import logging.config
-import yagmail
 
 login_manager = LoginManager()
 login_manager.login_view = "auth_bp.login"
@@ -40,10 +39,6 @@ def create_app():
         login_manager.init_app(app)
         flask_bcrypt.init_app(app)
         db.init_app(app)
-        yagmail.SMTP(
-            user=app.config.get("SMTP_USERNAME"),
-            password=app.config.get("SMTP_PASSWORD")
-        )
 
         _configure_logging(app, dynaconf)
 
