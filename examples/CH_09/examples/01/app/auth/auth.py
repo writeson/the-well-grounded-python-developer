@@ -1,15 +1,14 @@
 from logging import getLogger
-from flask import render_template, redirect, url_for, request, flash, current_app
-from . import auth_bp
-from .. models import db_session_manager, User, Role
-from .. import login_manager
-from .forms import (
-    LoginForm,
-    RegisterNewUserForm,
-)
-from flask_login import login_user, logout_user, current_user
+
+from flask import (current_app, flash, redirect, render_template, request,
+                   url_for)
+from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
+from .. import login_manager
+from ..models import User, db_session_manager
+from . import auth_bp
+from .forms import LoginForm, RegisterNewUserForm
 
 logger = getLogger(__name__)
 
@@ -67,9 +66,6 @@ def register_new_user():
                 email=form.email.data,
                 password=form.password.data,
             )
-            role_name = "admin" if user.email in current_app.config.get("ADMIN_USERS") else "user"
-            role = db_session.query(Role).filter(Role.name == role_name).one_or_none()
-            role.users.append(user)
             db_session.add(user)
             db_session.commit()
             logger.debug(f"new user {form.email.data} added")

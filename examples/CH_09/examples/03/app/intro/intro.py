@@ -4,6 +4,8 @@ from logging import getLogger
 from random import sample
 from . import intro_bp
 from flask_login import login_required
+from ..decorators import authorization_required
+from ..models import Role
 
 logger = getLogger(__file__)
 
@@ -49,3 +51,10 @@ def about():
 @login_required
 def auth_required():
     return render_template("auth_required.html")
+
+
+@intro_bp.get("/admin_required")
+@login_required
+@authorization_required(Role.Permissions.ADMINISTRATOR)
+def admin_required():
+    return render_template("admin_required.html")
