@@ -1,0 +1,27 @@
+# configure some default settings
+[default]
+sqlalchemy_database_uri = "sqlite:///myblog.sqlite"
+sqlalchemy_track_modifications = false
+
+# configure the development environment settings
+[development]
+flask_debug = true
+extensions = ["flask_debugtoolbar:DebugToolbarExtension"]
+debug_tb_enabled = false
+debug_tb_intercept_redirects = false
+
+# development datatabase settings
+sqlalchemy_echo = false
+
+# set the development logging level
+logging_level = "DEBUG"
+
+# configure the production environment settings
+[production]
+flask_debug = false
+
+# production datatabase settings
+sqlalchemy_echo = false
+
+# set the production logging level
+logging_level = "INFO"
