@@ -1,21 +1,17 @@
 from logging import getLogger
-from flask import render_template, redirect, url_for, request, flash, current_app, abort
-from flask_login.utils import login_required
-from . import auth_bp
-from .. models import db_session_manager, User, Role
-from .. import login_manager
-from .forms import (
-    LoginForm,
-    RegisterNewUserForm,
-    UserProfileForm,
-    ResendConfirmationForm,
-    RequestResetPasswordForm,
-    ResetPasswordForm,
-)
-from flask_login import login_user, logout_user, current_user
-from werkzeug.urls import url_parse
-from ..emailer import send_mail
 
+from flask import (abort, current_app, flash, redirect, render_template,
+                   request, url_for)
+from flask_login import current_user, login_user, logout_user
+from flask_login.utils import login_required
+from werkzeug.urls import url_parse
+
+from .. import login_manager
+from ..emailer import send_mail
+from ..models import Role, User, db_session_manager
+from . import auth_bp
+from .forms import (LoginForm, RegisterNewUserForm, RequestResetPasswordForm,
+                    ResendConfirmationForm, ResetPasswordForm, UserProfileForm)
 
 logger = getLogger(__name__)
 
@@ -251,9 +247,9 @@ def send_confirmation_email(user):
     to = user.email
     subject = "Confirm Your Email"
     contents = (
-        f"""Dear {user.first_name},
+        f"""Dear {user.first_name},<br /><br />
         Welcome to MyBlog, please click the link to confirm your email within {timeout} hours:
-        {confirmation_url}
+        {confirmation_url}<br /><br />
         Thank you!
         """
     )
@@ -271,10 +267,10 @@ def send_password_reset(user):
     to = user.email
     subject = "Password Reset"
     contents = (
-        f"""{user.first_name},
+        f"""{user.first_name},<br /><br />
         Click the following link to reset your password within {timeout} minutes:
         {url_for('auth_bp.reset_password', token=token, _external=True)}
-        If you haven't requested a password reset ignore this email.
+        If you haven't requested a password reset ignore this email.<br /><br />
         Sincerely,
         MyBlog
         """

@@ -8,7 +8,6 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 import logging
 import logging.config
-import yagmail
 
 login_manager = LoginManager()
 login_manager.login_view = "auth_bp.login"
@@ -40,10 +39,6 @@ def create_app():
         login_manager.init_app(app)
         flask_bcrypt.init_app(app)
         db.init_app(app)
-        yagmail.SMTP(
-            user=app.config.get("SMTP_USERNAME"),
-            password=app.config.get("SMTP_PASSWORD")
-        )
 
         _configure_logging(app, dynaconf)
 
@@ -57,15 +52,6 @@ def create_app():
 
         # create the database if necessary
         db.create_all()
-
-        # initialize the role table
-        from .models import Role
-        Role.initialize_role_table()
-
-        # inject the role permissions class into all template contexts
-        @app.context_processor
-        def inject_permissions():
-            return dict(Permissions=Role.Permissions)
 
         return app
 

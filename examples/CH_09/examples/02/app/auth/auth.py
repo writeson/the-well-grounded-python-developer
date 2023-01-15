@@ -1,21 +1,17 @@
 from logging import getLogger
-from flask import render_template, redirect, url_for, request, flash, current_app, abort
-from flask_login.utils import login_required
-from . import auth_bp
-from .. models import db_session_manager, User, Role
-from .. import login_manager
-from .forms import (
-    LoginForm,
-    RegisterNewUserForm,
-    UserProfileForm,
-    ResendConfirmationForm,
-    RequestResetPasswordForm,
-    ResetPasswordForm,
-)
-from flask_login import login_user, logout_user, current_user
-from werkzeug.urls import url_parse
-from ..emailer import send_mail
 
+from flask import (abort, current_app, flash, redirect, render_template,
+                   request, url_for)
+from flask_login import current_user, login_user, logout_user
+from flask_login.utils import login_required
+from werkzeug.urls import url_parse
+
+from .. import login_manager
+from ..emailer import send_mail
+from ..models import User, db_session_manager
+from . import auth_bp
+from .forms import (LoginForm, RegisterNewUserForm, RequestResetPasswordForm,
+                    ResendConfirmationForm, ResetPasswordForm, UserProfileForm)
 
 logger = getLogger(__name__)
 
@@ -73,9 +69,6 @@ def register_new_user():
                 email=form.email.data,
                 password=form.password.data,
             )
-            role_name = "admin" if user.email in current_app.config.get("ADMIN_USERS") else "user"
-            role = db_session.query(Role).filter(Role.name == role_name).one_or_none()
-            role.users.append(user)
             db_session.add(user)
             db_session.commit()
             send_confirmation_email(user)
@@ -251,9 +244,9 @@ def send_confirmation_email(user):
     to = user.email
     subject = "Confirm Your Email"
     contents = (
-        f"""Dear {user.first_name},
+        f"""Hi {user.first_name},<br /><br />
         Welcome to MyBlog, please click the link to confirm your email within {timeout} hours:
-        {confirmation_url}
+        {confirmation_url}<br /><br />
         Thank you!
         """
     )

@@ -1,11 +1,12 @@
-from flask import render_template
 from datetime import datetime
 from logging import getLogger
 from random import sample
-from . import intro_bp
+
+from flask import render_template
 from flask_login import login_required
+
 from ..decorators import authorization_required
-from ..models import Role
+from . import intro_bp
 
 logger = getLogger(__file__)
 
@@ -55,6 +56,5 @@ def auth_required():
 
 @intro_bp.get("/admin_required")
 @login_required
-@authorization_required(Role.Permissions.ADMINISTRATOR)
 def admin_required():
     return render_template("admin_required.html")
