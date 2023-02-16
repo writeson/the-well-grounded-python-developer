@@ -38,6 +38,6 @@ six==1.16.0
 SQLAlchemy==1.4.27
 urllib3==1.26.7
 waitress==2.1.2
-Werkzeug==2.0.2
+Werkzeug==2.2.3
 WTForms==3.0.0
 sib-api-v3-sdk==7.5.0
