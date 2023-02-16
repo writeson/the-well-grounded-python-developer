@@ -50,7 +50,7 @@ unsync==1.4.0
 urllib3==1.26.8
 waitress==2.1.2
 webencodings==0.5.1
-Werkzeug==2.0.3
+Werkzeug==2.2.3
 Whoosh==2.7.4
 WTForms==3.0.1
 yagmail==0.15.277
