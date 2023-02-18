@@ -26,7 +26,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.3
 lxml==4.9.1
 mako==1.2.2
-MarkupSafe==2.0.1
+MarkupSafe==2.1.1
 premailer==3.10.0
 pycparser==2.21
 pyjwt==2.4.0
