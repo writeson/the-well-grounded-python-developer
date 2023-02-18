@@ -25,5 +25,5 @@ tinycss2==1.1.1
 toml==0.10.2
 weasyprint==55.0
 webencodings==0.5.1
-Werkzeug==2.0.2
+Werkzeug==2.2.3
 zopfli==0.1.9
