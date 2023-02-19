@@ -1,12 +1,14 @@
 from logging import getLogger
-from flask import render_template, redirect, url_for, request, flash
-from . import auth_bp
-from .. models import db_session_manager, User
-from .. import login_manager
-from .forms import LoginForm
-from flask_login import login_user, logout_user
+
+from flask import (current_app, flash, redirect, render_template, request,
+                   url_for)
+from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
+from .. import login_manager
+from ..models import User, db_session_manager
+from . import auth_bp
+from .forms import LoginForm, RegisterNewUserForm
 
 logger = getLogger(__name__)
 
@@ -46,6 +48,29 @@ def login():
                 next = url_for("intro_bp.home")
             return redirect(next)
     return render_template("login.html", form=form)
+
+
+@auth_bp.get("/register_new_user")
+@auth_bp.post("/register_new_user")
+def register_new_user():
+    if current_user.is_authenticated:
+        return redirect(url_for("intro_bp.home"))
+    form = RegisterNewUserForm()
+    if form.cancel.data:
+        return redirect(url_for("intro_bp.home"))
+    if form.validate_on_submit():
+        with db_session_manager() as db_session:
+            user = User(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                password=form.password.data,
+            )
+            db_session.add(user)
+            db_session.commit()
+            logger.debug(f"new user {form.email.data} added")
+            return redirect(url_for("intro_bp.home"))
+    return render_template("register_new_user.html", form=form)
 
 
 @auth_bp.get("/logout")

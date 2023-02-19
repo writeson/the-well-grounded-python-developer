@@ -53,15 +53,6 @@ def create_app():
         # create the database if necessary
         db.create_all()
 
-        # initialize the role table
-        from .models import Role
-        Role.initialize_role_table()
-
-        # inject the role permissions class into all template contexts
-        @app.context_processor
-        def inject_permissions():
-            return dict(Permissions=Role.Permissions)
-
         return app
 
 

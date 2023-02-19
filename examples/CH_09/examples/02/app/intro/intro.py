@@ -1,7 +1,11 @@
-from flask import render_template
 from datetime import datetime
 from logging import getLogger
 from random import sample
+
+from flask import render_template
+from flask_login import login_required
+
+from ..decorators import authorization_required
 from . import intro_bp
 
 logger = getLogger(__file__)
@@ -28,7 +32,7 @@ class BannerColors:
         return sample(BannerColors.COLORS, 5)
 
 
-@intro_bp.route("/")
+@intro_bp.get("/")
 def home():
     logger.debug("rendering home page")
     return render_template("index.html", data={
@@ -38,7 +42,19 @@ def home():
     })
 
 
-@intro_bp.route("/about")
+@intro_bp.get("/about")
 def about():
     logger.debug("rendering about page")
     return render_template("about.html")
+
+
+@intro_bp.get("/auth_required")
+@login_required
+def auth_required():
+    return render_template("auth_required.html")
+
+
+@intro_bp.get("/admin_required")
+@login_required
+def admin_required():
+    return render_template("admin_required.html")

@@ -81,3 +81,97 @@ class RegisterNewUserForm(FlaskForm):
             user = db_session.query(User).filter(User.email == field.data).one_or_none()
             if user is not None:
                 raise ValidationError("Email already registered")
+
+
+class ResendConfirmationForm(FlaskForm):
+    email = EmailField(
+        "Email",
+        validators=[DataRequired(), Length(
+            min=4,
+            max=128,
+            message="Email must be between 4 and 128 characters long"
+        ), Email()],
+        render_kw={"placeholder": " ", "tabindex": 1}
+    )
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 3, "autofocus": True}
+    )
+
+
+class UserProfileForm(FlaskForm):
+    first_name = StringField(
+        "First Name",
+        validators=[DataRequired()],
+        render_kw={"placeholder": " ", "tabindex": 1, "readonly": True, "autofocus": True}
+    )
+    last_name = StringField(
+        "Last Name",
+        validators=[DataRequired()],
+        render_kw={"placeholder": " ", "tabindex": 2, "readonly": True}
+    )
+    email = EmailField(
+        "Email",
+        validators=[DataRequired(), Length(
+            min=4,
+            max=128,
+            message="Email must be between 4 and 128 characters long"
+        ), Email()],
+        render_kw={"placeholder": " ", "tabindex": 3, "readonly": True}
+    )
+    password = PasswordField(
+        "Password",
+        validators=[DataRequired(), Length(
+            min=3,
+            max=64,
+            message="Password must be between 3 and 64 characters long"
+        ),
+            EqualTo("confirm_password", message="Passwords must match")
+        ],
+        render_kw={"placeholder": " ", "tabindex": 4}
+    )
+    confirm_password = PasswordField(
+        "Confirm Password",
+        validators=[DataRequired(), Length(
+            min=3,
+            max=64,
+            message="Password must be between 3 and 64 characters long"
+        )],
+        render_kw={"placeholder": " ", "tabindex": 5}
+    )
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 7})
+
+
+class RequestResetPasswordForm(FlaskForm):
+    email = EmailField(
+        "Email",
+        validators=[DataRequired(), Length(
+            min=4,
+            max=128,
+            message="Email must be between 4 and 128 characters long"
+        ), Email()],
+        render_kw={"placeholder": " ", "tabindex": 1}
+    )
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 3, "autofocus": True})
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField(
+        "Password",
+        validators=[DataRequired(), Length(
+            min=3,
+            max=64,
+            message="Password must be between 3 and 64 characters long"
+        ),
+            EqualTo("confirm_password", message="Passwords must match")
+        ],
+        render_kw={"placeholder": " ", "tabindex": 1, "autofocus": True}
+    )
+    confirm_password = PasswordField(
+        "Confirm Password",
+        validators=[DataRequired(), Length(
+            min=3,
+            max=64,
+            message="Password must be between 3 and 64 characters long"
+        )],
+        render_kw={"placeholder": " ", "tabindex": 2}
+    )
+    cancel = SubmitField("Cancel", render_kw={"tabindex": 4})

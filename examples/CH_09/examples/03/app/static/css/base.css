@@ -14,3 +14,11 @@
     background: var(--background-url) no-repeat center center / cover;
   }
 }
+
+a.current-user {
+  border-right: solid 1px white;
+}
+
+.nav-link {
+  padding: 0 .5rem;
+}

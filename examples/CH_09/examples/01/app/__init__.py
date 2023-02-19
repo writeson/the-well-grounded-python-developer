@@ -1,13 +1,14 @@
-import os
-import yaml
-from pathlib import Path
-from flask import Flask, send_from_directory
-from dynaconf import FlaskDynaconf
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_bcrypt import Bcrypt
 import logging
 import logging.config
+import os
+from pathlib import Path
+
+import yaml
+from dynaconf import FlaskDynaconf
+from flask import Flask, send_from_directory
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 login_manager = LoginManager()
 login_manager.login_view = "auth_bp.login"
@@ -43,8 +44,7 @@ def create_app():
         _configure_logging(app, dynaconf)
 
         # import the routes
-        from . import intro
-        from . import auth
+        from . import auth, intro
 
         # register the blueprints
         app.register_blueprint(intro.intro_bp)
@@ -52,15 +52,6 @@ def create_app():
 
         # create the database if necessary
         db.create_all()
-
-        # initialize the role table
-        from .models import Role
-        Role.initialize_role_table()
-
-        # inject the role permissions class into all template contexts
-        @app.context_processor
-        def inject_permissions():
-            return dict(Permissions=Role.Permissions)
 
         return app
 

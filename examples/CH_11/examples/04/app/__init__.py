@@ -1,19 +1,20 @@
-import os
-from flask.templating import render_template
-import yaml
-from pathlib import Path
-from flask import Flask, send_from_directory, session
-from dynaconf import FlaskDynaconf
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_bcrypt import Bcrypt
-from flaskext.markdown import Markdown
-from flask_pagedown import PageDown
 import logging
 import logging.config
-import yagmail
+import os
 from datetime import timezone
+from pathlib import Path
+
 import pytz
+import yagmail
+import yaml
+from dynaconf import FlaskDynaconf
+from flask import Flask, send_from_directory, session
+from flask.templating import render_template
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+from flask_pagedown import PageDown
+from flask_sqlalchemy import SQLAlchemy
+from flaskext.markdown import Markdown
 
 login_manager = LoginManager()
 login_manager.login_view = "auth_bp.login"
@@ -33,12 +34,12 @@ def create_app():
     with app.app_context():
 
         # create a route to the favicon.ico file
-        @app.route('/favicon.ico')
+        @app.route("/favicon.ico")
         def favicon():
             return send_from_directory(
-                os.path.join(app.root_path, 'static'),
-                'favicon.ico',
-                mimetype="image/vnd.microsoft.icon"
+                os.path.join(app.root_path, "static"),
+                "favicon.ico",
+                mimetype="image/vnd.microsoft.icon",
             )
 
         # initialize plugins
@@ -49,16 +50,14 @@ def create_app():
         db.init_app(app)
         yagmail.SMTP(
             user=app.config.get("SMTP_USERNAME"),
-            password=app.config.get("SMTP_PASSWORD")
+            password=app.config.get("SMTP_PASSWORD"),
         )
         pagedown.init_app(app)
         Markdown(app)
         _configure_logging(app, dynaconf)
 
         # import the routes
-        from . import intro
-        from . import auth
-        from . import content
+        from . import auth, content, intro
 
         # register the blueprints
         app.register_blueprint(intro.intro_bp)
@@ -70,9 +69,11 @@ def create_app():
 
         # initialize the role table
         from .models import Role
+
         Role.initialize_role_table()
 
         # register error handlers
+        app.register_error_handler(403, error_page)
         app.register_error_handler(404, error_page)
         app.register_error_handler(500, error_page)
 
@@ -84,7 +85,9 @@ def create_app():
         @app.template_filter()
         def format_datetime(value, format="%Y-%m-%d %H:%M:%S"):
             value_with_timezone = value.replace(tzinfo=timezone.utc)
-            tz = pytz.timezone(session.get("timezone_info", {}).get("timeZone", "US/Eastern"))
+            tz = pytz.timezone(
+                session.get("timezone_info", {}).get("timeZone", "US/Eastern")
+            )
             local_now = value_with_timezone.astimezone(tz)
             return local_now.strftime(format)
 

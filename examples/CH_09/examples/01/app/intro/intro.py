@@ -3,6 +3,7 @@ from datetime import datetime
 from logging import getLogger
 from random import sample
 from . import intro_bp
+from flask_login import login_required
 
 logger = getLogger(__file__)
 
@@ -42,3 +43,9 @@ def home():
 def about():
     logger.debug("rendering about page")
     return render_template("about.html")
+
+
+@intro_bp.get("/auth_required")
+@login_required
+def auth_required():
+    return render_template("auth_required.html")

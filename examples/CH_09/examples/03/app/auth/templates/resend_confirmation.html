@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% import "macros.jinja" as macros %}
+
+{% block content %}
+<div class="register-new-user-wrapper mx-auto mt-3">
+    <div class="container resend-confirmation-email">
+        <form name="resend_confirmation" method="POST" novalidate>
+            <div class="card">
+                <h5 class="card-header">
+                    Resend Confirmation Link Email
+                </h5>
+                <div class="card-body">
+                    <div class="card-text">
+                        {{form.csrf_token}}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-envelope fs-4"></i></span>
+                            <div class="form-floating form-floating-group flex-grow-1">
+                                {{form.email(class="form-control")}}
+                                {{form.email.label(class="form-label")}}
+                            </div>
+                        </div>
+                        {{macros.validation_errors(form.email.errors)}}
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <button
+                        type="button"
+                        class="btn btn-primary me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmation_modal"
+                        tabindex="2"
+                    >
+                        Resend Confirmation
+                    </button>
+                    {{form.cancel(class="btn btn-warning")}}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{{ macros.form_confirmation_modal(
+    "Confirm Resend Confirmation",
+    "Are you sure you wish to resend email confirmation?", 
+    "Resend", 
+    "Cancel"
+    )
+}}
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/register_new_user.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/auth.css') }}" />
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='js/confirm_submit.js') }}"></script>
+    <script>
+        confirm_submit_initialize('resend_confirmation', 'resend');
+    </script>
+{% endblock %}
