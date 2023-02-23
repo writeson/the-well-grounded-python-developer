@@ -5,7 +5,6 @@ from datetime import timezone
 from pathlib import Path
 
 import pytz
-import yagmail
 import yaml
 from dynaconf import FlaskDynaconf
 from flask import Flask, send_from_directory, session
@@ -48,10 +47,6 @@ def create_app():
         login_manager.init_app(app)
         flask_bcrypt.init_app(app)
         db.init_app(app)
-        yagmail.SMTP(
-            user=app.config.get("SMTP_USERNAME"),
-            password=app.config.get("SMTP_PASSWORD"),
-        )
         pagedown.init_app(app)
         Markdown(app)
         _configure_logging(app, dynaconf)

@@ -76,8 +76,12 @@ class User(UserMixin, db.Model):
     active = db.Column(db.Boolean, nullable=False, default=True)
     confirmed = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
-    updated = db.Column(db.DateTime, nullable=False, default=datetime.now(
-        tz=timezone.utc), onupdate=datetime.now(tz=timezone.utc))
+    updated = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.now(tz=timezone.utc),
+        onupdate=datetime.now(tz=timezone.utc)
+    )
 
     def get_id(self):
         return self.user_uid
@@ -182,8 +186,12 @@ class Role(db.Model):
     users = db.relationship("User", backref=db.backref("role", lazy="joined"))
     active = db.Column(db.Boolean, nullable=False, default=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
-    updated = db.Column(db.DateTime, nullable=False, default=datetime.now(
-        tz=timezone.utc), onupdate=datetime.now(tz=timezone.utc))
+    updated = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.now(tz=timezone.utc),
+        onupdate=datetime.now(tz=timezone.utc)
+    )
 
     @property
     def permissions(self):

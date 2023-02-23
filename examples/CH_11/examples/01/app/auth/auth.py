@@ -268,9 +268,9 @@ def send_confirmation_email(user):
     to = user.email
     subject = "Confirm Your Email"
     contents = (
-        f"""Hi {user.first_name},
+        f"""Dear {user.first_name},<br /><br />
         Welcome to MyBlog, please click the link to confirm your email within {timeout} hours:
-        {confirmation_url}
+        {confirmation_url}<br /><br />
         Thank you!
         """
     )
@@ -288,10 +288,10 @@ def send_password_reset(user):
     to = user.email
     subject = "Password Reset"
     contents = (
-        f"""{user.first_name},
+        f"""{user.first_name},<br /><br />
         Click the following link to reset your password within {timeout} minutes:
         {url_for('auth_bp.reset_password', token=token, _external=True)}
-        If you haven't requested a password reset ignore this email.
+        If you haven't requested a password reset ignore this email.<br /><br />
         Sincerely,
         MyBlog
         """

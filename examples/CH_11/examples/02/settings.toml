@@ -15,7 +15,7 @@ extensions = ["flask_debugtoolbar:DebugToolbarExtension"]
 flask_debug = true
 
 # development datatabase settings
-sqlalchemy_echo = true
+sqlalchemy_echo = false
 sqlalchemy_record_queries = true
 
 # set the development logging level

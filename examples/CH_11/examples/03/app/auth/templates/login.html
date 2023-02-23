@@ -12,9 +12,9 @@
                         {{form.csrf_token}}
                         {{form.timezone_info}}
                         <div class="input-group mb-3">
-                            <span class="input-group-text"
-                                ><i class="bi bi-envelope fs-4"></i
-                            ></span>
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope fs-4"></i>
+                            </span>
                             <div class="form-floating form-floating-group flex-grow-1">
                                 {{form.email(class_="form-control")}}
                                 {{form.email.label(class_="form-label")}}
@@ -22,9 +22,9 @@
                         </div>
                         {{macros.validation_errors(form.email.errors)}}
                         <div class="input-group mb-3">
-                            <span class="input-group-text"
-                                ><i class="bi bi-key fs-4"></i
-                            ></span>
+                            <span class="input-group-text">
+                                <i class="bi bi-key fs-4"></i>
+                            </span>
                             <div class="form-floating form-floating-group flex-grow-1">
                                 {{form.password(class_="form-control")}}
                                 {{form.password.label(class_="form-label")}}
@@ -36,7 +36,9 @@
                             {{form.remember_me.label(class_="form-check-label")}}
                         </div>
                         <p>
-                            <a href="{{url_for('auth_bp.register_new_user', next=request.args.get('next'))}}">
+                            <a
+                                href="{{url_for('auth_bp.register_new_user', next=request.args.get('next'))}}"
+                            >
                                 New Users click here to register
                             </a>
                         </p>

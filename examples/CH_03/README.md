@@ -1,13 +1,13 @@
-# Chapter 4 Example Programs
+# Chapter 3 Example Programs
 
-This directory contains the Chapter 4 examples from the book and scripts to install and run those examples.
+This directory contains the Chapter 3 examples from the book and scripts to install and run those examples.
 
 ## Installation
 
 You will need a Python virtual environment to run the programs so that any modules installed by the setup won't interfere with your system Python. The instructions here depend on having the `pyenv` utility installed on your system. To activate a Python virtual environment in this directory take the following steps:
 
 ```console
-$ cd CH_04
+$ cd CH_03
 $ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate

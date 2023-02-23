@@ -36,14 +36,15 @@ Where necessary, each chapter has it's own `README.md` file that explains how to
 ### Chapters with README files
 
 - Groundwork
-  - [Chapter 4](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_04) - Where Developers and Computers Meet
-  - [Chapter 5](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_05) - The Object of a Conversation
-  - [Chapter 6](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_06) - Exceptional Events
+  - [Chapter 3](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_03) - The API, Where Developers and Computers Meet
+  - [Chapter 4](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_04) - The Object of a Conversation
+  - [Chapter 5](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_05) - Exceptional Events, Let's Handle Them
 - Fieldwork
-  - [Chapter 7](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_07) - Sharing With the World
-  - [Chapter 8](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_08) - Doing it With Style
-  - [Chapter 9](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_09) - Do I Know You?
-  - [Chapter 10](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_10) - Persistence Means Never Having to say Goodbye
-  - [Chapter 11](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_11) - I've Got Something to Say
+  - [Chapter 6](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_06) - Sharing With the Internet
+  - [Chapter 7](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_07) - Doing it With Style
+  - [Chapter 8](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_08) - Do I Know You? Authentication
+  - [Chapter 9](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_09) - I Know You, What Would You Like To Do? Authorization
+  - [Chapter 10](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_10) - Persistence Means Never Having to say Goodbye, at Least With a Database
+  - [Chapter 11](https://github.com/writeson/the-well-grounded-python-developer/tree/integration/examples/CH_11) - I've Got Something to Say, and I'm Going to Blog About it
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=Ria700.Ria700)

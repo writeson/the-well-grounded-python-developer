@@ -1,6 +1,6 @@
-# Chapter 8 Example Programs
+# Chapter 7 Example Programs
 
-This directory contains the Chapter 8 examples from the book and scripts to install and run those examples.
+This directory contains the Chapter 7 examples from the book and scripts to install and run those examples.
 
 ## Installation
 

@@ -1,13 +1,13 @@
-# Chapter 7 Example Programs
+# Chapter 6 Example Programs
 
-This directory contains the Chapter 7 examples from the book and scripts to install and run those examples.
+This directory contains the Chapter 6 examples from the book and scripts to install and run those examples.
 
 ## Installation
 
 You will need a Python virtual environment to run the programs so that any modules installed by the setup won't interfere with your system Python. The instructions here depend on having the `pyenv` utility installed on your system. To activate a Python virtual environment in this directory take the following steps:
 
 ```console
-$ cd CH_07
+$ cd CH_06
 $ pyenv local 3.10.3
 $ python -m venv .venv
 $ source .venv/bin/activate
@@ -26,4 +26,4 @@ pip install -r requirements.txt
 
 - 01 - demonstrates a simple "Hello World" web application
 - 02 - demonstrates a web application with dynamically updated data
-- 03 - demonstrates a web application with dynamically updated data and user interaction
+- 03 - demonstrates a web application with dynamically updated data and user interactive
