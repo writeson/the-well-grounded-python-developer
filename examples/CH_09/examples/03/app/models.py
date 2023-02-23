@@ -198,7 +198,8 @@ class Role(db.Model):
                 "description": "administrator user with access to all of the application",
                 "raw_permissions": (
                     Role.Permissions.REGISTERED |
-                    Role.Permissions.EDITOR | Role.Permissions.ADMINISTRATOR
+                    Role.Permissions.EDITOR |
+                    Role.Permissions.ADMINISTRATOR
                 ).value
             }
         ]

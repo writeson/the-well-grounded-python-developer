@@ -1,18 +1,18 @@
-import os
-import yaml
-from pathlib import Path
-from flask import Flask, send_from_directory, session
-from dynaconf import FlaskDynaconf
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_bcrypt import Bcrypt
-from flaskext.markdown import Markdown
-from flask_pagedown import PageDown
 import logging
 import logging.config
-import yagmail
+import os
 from datetime import timezone
+from pathlib import Path
+
 import pytz
+import yaml
+from dynaconf import FlaskDynaconf
+from flask import Flask, send_from_directory, session
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+from flask_pagedown import PageDown
+from flask_sqlalchemy import SQLAlchemy
+from flaskext.markdown import Markdown
 
 login_manager = LoginManager()
 login_manager.login_view = "auth_bp.login"
@@ -46,18 +46,12 @@ def create_app():
         login_manager.init_app(app)
         flask_bcrypt.init_app(app)
         db.init_app(app)
-        yagmail.SMTP(
-            user=app.config.get("SMTP_USERNAME"),
-            password=app.config.get("SMTP_PASSWORD")
-        )
         pagedown.init_app(app)
         Markdown(app)
         _configure_logging(app, dynaconf)
 
         # import the routes
-        from . import intro
-        from . import auth
-        from . import content
+        from . import auth, content, intro
 
         # register the blueprints
         app.register_blueprint(intro.intro_bp)
